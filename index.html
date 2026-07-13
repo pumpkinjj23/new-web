@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarbonWallet - แพลตฟอร์มสะสมแต้มคาร์บอนและการแลกของรางวัล</title>
+  <!-- Google Fonts: Inter and Noto Sans Thai -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=2.5">
+</head>
+
+<body>
+
+  <!-- Cyber background glow blobs -->
+  <div class="glow-blob glow-1"></div>
+  <div class="glow-blob glow-2"></div>
+  <div class="glow-blob glow-3"></div>
+
+  <!-- App Shell Container -->
+  <div class="app-container">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span class="logo-text">Carbon<span>Wallet</span></span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="#" class="nav-link active" data-target="dashboard-view" id="sidebar-nav-dashboard">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span>หน้าหลัก (Dashboard)</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-target="rewards-view" id="sidebar-nav-rewards">
+              <i class="fa-solid fa-gift"></i>
+              <span>แลกของรางวัล (Rewards)</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-target="transactions-view" id="sidebar-nav-transactions">
+              <i class="fa-solid fa-receipt"></i>
+              <span>ประวัติรายการ (Transactions)</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-target="profile-view" id="sidebar-nav-profile">
+              <i class="fa-solid fa-user-gear"></i>
+              <span>โปรไฟล์ผู้ใช้ (Profile)</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Mini Profile Info at bottom of Sidebar -->
+      <div class="sidebar-profile-card">
+        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="User Avatar" class="sidebar-avatar"
+          id="sidebar-avatar-img">
+        <div class="sidebar-profile-details">
+          <div class="sidebar-profile-name" id="user-name-sidebar">สมชาย รักดี</div>
+          <div class="sidebar-profile-code" id="user-code-sidebar">CW-88492</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- Top Header -->
+      <header class="header">
+        <div class="header-left">
+          <!-- Hamburger Menu Container -->
+          <div class="menu-dropdown-container">
+            <button class="hamburger-btn" id="hamburger-menu-btn" title="เมนูนำทาง">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <!-- Dropdown Menu Links -->
+            <div class="nav-dropdown-menu" id="nav-dropdown-menu">
+              <a href="#" class="nav-link active" data-target="dashboard-view" id="nav-dashboard">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>หน้าหลัก (Dashboard)</span>
+              </a>
+              <a href="#" class="nav-link" data-target="rewards-view" id="nav-rewards">
+                <i class="fa-solid fa-gift"></i>
+                <span>แลกของรางวัล (Rewards)</span>
+              </a>
+              <a href="#" class="nav-link" data-target="transactions-view" id="nav-transactions">
+                <i class="fa-solid fa-receipt"></i>
+                <span>ประวัติรายการ (Transactions)</span>
+              </a>
+              <a href="#" class="nav-link" data-target="profile-view" id="nav-profile">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>โปรไฟล์ผู้ใช้ (Profile)</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Brand Logo in Header -->
+          <div class="header-logo">
+            <div class="logo-icon">
+              <i class="fa-solid fa-leaf"></i>
+            </div>
+            <span class="logo-text">Carbon<span>Wallet</span></span>
+          </div>
+
+          <div class="header-divider"></div>
+
+          <h1 class="page-title" id="page-title-display">หน้าหลัก (Dashboard)</h1>
+        </div>
+
+        <div class="header-right">
+          <!-- Live Points Display in Header -->
+          <div class="points-badge-header">
+            <div class="points-icon-wrapper">
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <div class="points-info-text">
+              <span class="points-value" id="header-points-value">1,250</span>
+              <span class="points-unit">Points</span>
+            </div>
+          </div>
+
+          <!-- User Profile badge next to points -->
+          <div class="header-user-profile" id="header-profile-btn"
+            onclick="document.getElementById('nav-profile').click();">
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="User Avatar" class="header-avatar"
+              id="header-avatar-img">
+            <span class="header-username" id="header-username-display">สมชาย รักดี</span>
+          </div>
+
+          <div class="notification-bell" id="notification-bell-btn">
+            <i class="fa-regular fa-bell"></i>
+            <span class="badge-dot" id="notification-badge-dot"></span>
+
+            <!-- Notifications Dropdown -->
+            <div class="notifications-dropdown" id="notifications-dropdown">
+              <div class="dropdown-header">
+                <h4>การแจ้งเตือน</h4>
+                <button class="btn-clear-all" id="btn-clear-notifications">อ่านทั้งหมด</button>
+              </div>
+              <div class="dropdown-body" id="notifications-list">
+                <!-- Injected dynamically in app.js -->
+              </div>
+            </div>
+          </div>
+
+          <div class="theme-toggle" id="theme-toggle-btn">
+            <i class="fa-regular fa-moon"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW: Dashboard / Profile -->
+      <section id="dashboard-view" class="content-view active-view">
+
+        <!-- Welcome banner with visual animation elements -->
+        <div class="welcome-banner">
+          <div class="welcome-text-wrapper">
+            <h2>ยินดีต้อนรับกลับมา, <span id="user-display-name">คุณสมชาย รักดี</span>! 👋</h2>
+            <p>วันนี้คุณช่วยลดการปล่อยคาร์บอนไปแล้ว <b>2.4 kg CO₂e</b> มาร่วมสร้างโลกที่ยั่งยืนไปด้วยกัน!</p>
+            <div class="banner-badges">
+              <span class="badge"><i class="fa-solid fa-award"></i> ระดับ: Carbon Hero</span>
+              <span class="badge badge-green"><i class="fa-solid fa-tree"></i> ปลูกต้นไม้แล้ว 12 ต้น</span>
+            </div>
+          </div>
+          <div class="welcome-visual">
+            <div class="eco-circle">
+              <i class="fa-solid fa-earth-asia"></i>
+              <div class="pulse-ring"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats Cards Grid -->
+        <div class="stats-grid">
+
+          <!-- Points Balance Card -->
+          <div class="stat-card card-points">
+            <div class="card-bg-decoration"></div>
+            <div class="stat-icon-wrapper">
+              <i class="fa-solid fa-coins"></i>
+            </div>
+            <div class="stat-info">
+              <h3>คะแนนสะสมทั้งหมด</h3>
+              <div class="stat-value" id="dashboard-points-value">1,250</div>
+              <p class="stat-desc">สามารถนำไปแลกของรางวัลหรือคูปองส่วนลดได้ทันที</p>
+            </div>
+            <div class="stat-footer">
+              <button class="btn btn-primary btn-sm" id="btn-quick-redeem">
+                <i class="fa-solid fa-gift"></i> แลกของรางวัลเลย
+              </button>
+            </div>
+          </div>
+
+          <!-- Carbon Credits Saved Card -->
+          <div class="stat-card card-carbon">
+            <div class="stat-icon-wrapper">
+              <i class="fa-solid fa-cloud-arrow-down"></i>
+            </div>
+            <div class="stat-info">
+              <h3>คาร์บอนที่ลดได้สะสม</h3>
+              <div class="stat-value">148.5 <span class="unit">kg CO₂e</span></div>
+              <p class="stat-desc">เทียบเท่าการปลูกต้นไม้ <b>16.5</b> ต้นในปีนี้</p>
+            </div>
+            <!-- Interactive progress bar -->
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>ความคืบหน้าเป้าหมายเดือนนี้</span>
+                <span>74%</span>
+              </div>
+              <div class="progress-bar-outer">
+                <div class="progress-bar-inner" style="width: 74%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Details / Level Card -->
+          <div class="stat-card card-level">
+            <div class="stat-icon-wrapper">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div class="stat-info">
+              <h3>ระดับผู้ใช้งาน</h3>
+              <div class="stat-value" style="font-size: 1.8rem; margin-bottom: 0.25rem;">Level 3 Warrior</div>
+              <p class="stat-desc">อีก <b>150 XP</b> เพื่อเลื่อนไประดับ Level 4 Elite</p>
+            </div>
+            <div class="progress-container" style="margin-top: 1rem;">
+              <div class="progress-label">
+                <span>850 / 1000 XP</span>
+                <span>85%</span>
+              </div>
+              <div class="progress-bar-outer">
+                <div class="progress-bar-inner" style="width: 85%; background: var(--accent-color);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary section grid: Achievements & Quick Actions -->
+        <div class="dashboard-details-grid">
+
+          <!-- Green Activities List -->
+          <div class="details-card">
+            <div class="details-card-header">
+              <h3><i class="fa-solid fa-leaf green-icon"></i> กิจกรรมลดคาร์บอนล่าสุดของคุณ</h3>
+              <button class="btn-text" id="btn-view-all-activities">ดูทั้งหมด</button>
+            </div>
+            <div class="activities-list">
+              <div class="activity-item">
+                <div class="activity-icon bg-green-light">
+                  <i class="fa-solid fa-bus"></i>
+                </div>
+                <div class="activity-details">
+                  <h4>เดินทางด้วยรถโดยสารสาธารณะ EV</h4>
+                  <p>ลดคาร์บอน 3.2 kg CO₂e</p>
+                </div>
+                <div class="activity-points">+20 Carbon Credit</div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon bg-green-light">
+                  <i class="fa-solid fa-helmet-safety"></i>
+                </div>
+                <div class="activity-details">
+                  <h4>ขับขี่ปลอดภัยสวมหมวกนิรภัย (Helmet App)</h4>
+                  <p>บันทึกการเดินทางผ่านระบบ AI</p>
+                </div>
+                <div class="activity-points">+120 Points</div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon bg-green-light">
+                  <i class="fa-solid fa-person-walking"></i>
+                </div>
+                <div class="activity-details">
+                  <h4>เดินสะสมก้าว 10,000 ก้าว (PromptGo)</h4>
+                  <p>ลดคาร์บอน 1.5 kg CO₂e</p>
+                </div>
+                <div class="activity-points">+50 Points</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Badges & Eco Achievements -->
+          <div class="details-card">
+            <div class="details-card-header">
+              <h3><i class="fa-solid fa-trophy yellow-icon"></i> ความสำเร็จ (Achievements)</h3>
+            </div>
+            <div class="achievements-grid-dashboard">
+              <div class="badge-item tooltipped" data-tooltip="บันทึกกิจกรรมลดคาร์บอนติดต่อกัน 7 วัน">
+                <div class="badge-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                <span class="badge-title">วินัยสีเขียว</span>
+              </div>
+              <div class="badge-item tooltipped" data-tooltip="แลกของรางวัลประเภทคูปองอาหารสำเร็จ">
+                <div class="badge-icon"><i class="fa-solid fa-mug-hot"></i></div>
+                <span class="badge-title">นักชิมรักษ์โลก</span>
+              </div>
+              <div class="badge-item tooltipped" data-tooltip="ลดคาร์บอนสะสมครบ 100 kg">
+                <div class="badge-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <span class="badge-title">ฮีโร่คาร์บอน</span>
+              </div>
+              <div class="badge-item locked tooltipped" data-tooltip="แลกรางวัลพรีเมียมครบ 5 ชิ้น (ยังไม่ได้ปลดล็อก)">
+                <div class="badge-icon"><i class="fa-solid fa-lock"></i></div>
+                <span class="badge-title">ผู้เก็บสะสม</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- VIEW: Rewards -->
+      <section id="rewards-view" class="content-view">
+
+        <!-- Filter and Search Bar Container -->
+        <div class="filter-search-container">
+          <div class="search-box-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-reward-input" placeholder="ค้นหาของรางวัลที่คุณต้องการ...">
+          </div>
+
+          <div class="filters-wrapper">
+            <div class="select-dropdown">
+              <select id="sort-rewards-select">
+                <option value="popular">เรียง: ยอดนิยม</option>
+                <option value="points-low">คะแนน: ต่ำ - สูง</option>
+                <option value="points-high">คะแนน: สูง - ต่ำ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories horizontal bar -->
+        <div class="categories-bar" id="rewards-categories">
+          <button class="category-btn active" data-category="all">ทั้งหมด</button>
+          <button class="category-btn" data-category="food">อาหาร & เครื่องดื่ม</button>
+          <button class="category-btn" data-category="coupon">คูปองส่วนลด</button>
+          <button class="category-btn" data-category="premium">ของพรีเมียม</button>
+          <button class="category-btn" data-category="electronics">อิเล็กทรอนิกส์</button>
+          <button class="category-btn" data-category="others">อื่นๆ</button>
+        </div>
+
+        <!-- Rewards Grid Layout -->
+        <div class="rewards-grid" id="rewards-grid-container">
+          <!-- Cards will be dynamically injected by app.js -->
+        </div>
+
+      </section>
+
+      <!-- VIEW: Transactions (History) -->
+      <section id="transactions-view" class="content-view">
+
+        <!-- Filter Tabs for transactions -->
+        <div class="transactions-header-controls">
+          <div class="categories-bar" id="transactions-filter-tabs">
+            <button class="category-btn active" data-filter="all">ทั้งหมด</button>
+            <button class="category-btn" data-filter="received">ได้รับ</button>
+            <button class="category-btn" data-filter="used">ใช้ไป</button>
+            <button class="category-btn" data-filter="carbon">Carbon Credit</button>
+          </div>
+        </div>
+
+        <!-- Two-column Layout: List of transactions and Details Panel -->
+        <div class="transactions-layout">
+
+          <!-- Scrollable List -->
+          <div class="transactions-list-wrapper">
+            <div class="transactions-list" id="transactions-list-container">
+              <!-- Transactions injected here by app.js -->
+            </div>
+          </div>
+
+          <!-- Transaction Details side panel -->
+          <div class="transaction-detail-panel" id="transaction-detail-panel">
+            <!-- Dynamic Details will be rendered here. Empty state shown by default if none selected. -->
+            <div class="detail-empty-state">
+              <i class="fa-solid fa-receipt"></i>
+              <h3>รายละเอียดรายการ</h3>
+              <p>กรุณาเลือกรายการประวัติที่คุณต้องการตรวจสอบเพื่อดูรายละเอียดเพิ่มเติม</p>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- VIEW: Profile & Settings -->
+      <section id="profile-view" class="content-view">
+        <div class="profile-layout">
+
+          <!-- Left: User Main card -->
+          <div class="profile-left">
+            <div class="profile-card-main">
+              <div class="avatar-edit-wrapper">
+                <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="User Avatar"
+                  class="profile-main-avatar" id="profile-avatar-img">
+                <button class="avatar-change-btn" id="change-avatar-btn" title="เปลี่ยนรูปโปรไฟล์">
+                  <i class="fa-solid fa-camera"></i>
+                </button>
+                <input type="file" id="profile-file-input" accept="image/*" style="display: none;">
+              </div>
+              <h2 id="profile-user-name">สมชาย รักดี</h2>
+              <div class="profile-code-badge">รหัสสมาชิก: <span id="profile-user-code">CW-88492</span></div>
+
+              <div class="profile-quick-stats">
+                <div class="quick-stat-box">
+                  <div class="box-num" id="profile-points-display">1,250</div>
+                  <div class="box-label">แต้มสะสม</div>
+                </div>
+                <div class="quick-stat-box">
+                  <div class="box-num">Level 3</div>
+                  <div class="box-label">ระดับสมาชิก</div>
+                </div>
+                <div class="quick-stat-box">
+                  <div class="box-num">148.5 kg</div>
+                  <div class="box-label">ลดคาร์บอนแล้ว</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Editable Profile details form -->
+          <div class="profile-right">
+            <div class="details-card">
+              <h3><i class="fa-solid fa-user-edit green-icon"></i> ข้อมูลผู้ใช้งานอย่างเป็นทางการ</h3>
+              <form class="profile-form" id="profile-details-form" onsubmit="event.preventDefault();">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="input-firstname">ชื่อจริง</label>
+                    <input type="text" id="input-firstname" value="สมชาย" placeholder="ชื่อจริง">
+                  </div>
+                  <div class="form-group">
+                    <label for="input-lastname">นามสกุล</label>
+                    <input type="text" id="input-lastname" value="รักดี" placeholder="นามสกุล">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="input-email">อีเมล</label>
+                    <input type="email" id="input-email" value="somchai.rakdee@example.com" placeholder="อีเมล">
+                  </div>
+                  <div class="form-group">
+                    <label for="input-phone">เบอร์โทรศัพท์</label>
+                    <input type="text" id="input-phone" value="089-123-4567" placeholder="เบอร์โทรศัพท์">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="input-wallet-address">Blockchain Address (Wallet)</label>
+                    <input type="text" id="input-wallet-address" value="0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+                      readonly class="readonly-input">
+                    <small>ใช้สำหรับการอ้างอิงความถูกต้องและการบันทึกธุรกรรมความดีคาร์บอนบนเครือข่ายบล็อกเชน</small>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button type="button" class="btn btn-primary" id="btn-save-profile">
+                    <i class="fa-solid fa-floppy-disk"></i> บันทึกข้อมูลโปรไฟล์
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Gamification Level Up Progress card -->
+            <div class="details-card" style="margin-top: 1.5rem;">
+              <h3><i class="fa-solid fa-medal green-icon"></i> อันดับผู้พิทักษ์รักษ์โลก</h3>
+              <div class="leaderboard-preview">
+                <div class="leaderboard-item top-rank">
+                  <span class="rank-num">1</span>
+                  <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=leader1" alt="avatar" class="rank-avatar">
+                  <span class="rank-name">สุดารัตน์ ใจรักโลก</span>
+                  <span class="rank-points">4,820 แต้ม</span>
+                </div>
+                <div class="leaderboard-item top-rank">
+                  <span class="rank-num">2</span>
+                  <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=leader2" alt="avatar" class="rank-avatar">
+                  <span class="rank-name">วิชัย ปลูกป่า</span>
+                  <span class="rank-points">3,150 แต้ม</span>
+                </div>
+                <div class="leaderboard-item current-user">
+                  <span class="rank-num">18</span>
+                  <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="avatar" class="rank-avatar"
+                    id="leaderboard-avatar-img">
+                  <span class="rank-name">คุณสมชาย รักดี (คุณ)</span>
+                  <span class="rank-points" id="profile-leaderboard-points">1,250 แต้ม</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== MODALS & POPUPS ==================== -->
+
+  <!-- Modal: Reward Details -->
+  <div class="modal-overlay" id="reward-detail-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="close-detail-modal-btn">&times;</button>
+      <div class="modal-reward-image-wrapper">
+        <img id="detail-modal-image" src="" alt="Reward Image">
+        <div class="detail-modal-category" id="detail-modal-category">หมวดหมู่</div>
+      </div>
+      <div class="modal-content-body">
+        <h2 class="modal-reward-title" id="detail-modal-title">ชื่อรางวัลของรางวัล</h2>
+        <div class="detail-modal-points-wrapper">
+          <span class="detail-modal-points" id="detail-modal-points">0 Points</span>
+          <span class="detail-modal-stock" id="detail-modal-stock">คงเหลือ 0 ชิ้น</span>
+        </div>
+        <div class="modal-divider"></div>
+        <div class="detail-modal-description">
+          <h3>รายละเอียดและเงื่อนไข</h3>
+          <p id="detail-modal-desc">คำอธิบายรายละเอียดที่ดึงมาจากฐานข้อมูล...</p>
+          <ul class="modal-terms-list">
+            <li><i class="fa-solid fa-circle-check"></i> คูปองนี้สามารถใช้ได้ที่ร้านค้าที่ร่วมรายการทุกสาขา</li>
+            <li><i class="fa-solid fa-circle-check"></i> สิทธิ์ในการแลกจำกัด 1 บัญชีผู้ใช้ต่อ 1 ครั้ง</li>
+            <li><i class="fa-solid fa-circle-check"></i> ของรางวัลที่แลกแล้วไม่สามารถยกเลิกหรือคืนแต้มได้</li>
+            <li><i class="fa-solid fa-circle-check"></i> รหัสแลกรับมีอายุการใช้งาน 30 วันหลังกดยืนยันสำเร็จ</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-detail">ปิดหน้าต่าง</button>
+        <button class="btn btn-primary" id="btn-redeem-from-detail">
+          <i class="fa-solid fa-gift"></i> แลกรับของรางวัลเลย
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Redemption -->
+  <div class="modal-overlay" id="confirm-redeem-modal">
+    <div class="modal-card modal-confirm">
+      <div class="modal-confirm-header">
+        <div class="warning-icon-wrapper">
+          <i class="fa-solid fa-circle-question"></i>
+        </div>
+        <h2>ยืนยันการแลกรางวัล</h2>
+      </div>
+      <div class="modal-confirm-body">
+        <p>คุณแน่ใจหรือไม่ว่าจะใช้แต้มคาร์บอนแลกรับของรางวัลนี้?</p>
+        <div class="confirm-item-preview">
+          <img id="confirm-modal-item-img" src="" alt="Item Image" class="confirm-item-avatar">
+          <div class="confirm-item-details">
+            <h4 id="confirm-modal-item-title">ขวดน้ำเก็บความเย็นสีดำ</h4>
+            <div id="confirm-modal-item-points" class="points-cost">-300 Points</div>
+          </div>
+        </div>
+        <div class="points-summary-box">
+          <div class="summary-row">
+            <span>คะแนนปัจจุบันของคุณ</span>
+            <span id="confirm-user-current-points">1,250</span>
+          </div>
+          <div class="summary-row deduction">
+            <span>คะแนนที่จะถูกหัก</span>
+            <span id="confirm-points-to-deduct">-300</span>
+          </div>
+          <div class="summary-row total">
+            <span>คะแนนคงเหลือหลังทำรายการ</span>
+            <span id="confirm-points-remaining">950</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-redeem">ยกเลิก</button>
+        <button class="btn btn-primary" id="btn-confirm-redeem-action">กดยืนยันการแลกรางวัล</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Redeem Success (Image 3 Inspiration) -->
+  <div class="modal-overlay" id="success-redeem-modal">
+    <div class="confetti-container" id="confetti-container"></div>
+    <div class="modal-card modal-success-card animate-pop-in">
+      <div class="success-icon-badge">
+        <i class="fa-solid fa-check"></i>
+      </div>
+
+      <h2>แลกของรางวัลสำเร็จ!</h2>
+      <p class="success-subtitle">คุณได้แลก <span id="success-item-name" class="highlight">Stainless Bottle</span>
+        เรียบร้อยแล้ว</p>
+
+      <div class="success-points-display">
+        <div class="point-box-col">
+          <span class="box-label">ใช้ Points</span>
+          <span class="box-val minus" id="success-points-spent">-300 Points</span>
+        </div>
+        <div class="point-box-col">
+          <span class="box-label">คะแนนคงเหลือ</span>
+          <span class="box-val green" id="success-points-remaining">950 Points</span>
+        </div>
+      </div>
+
+      <div class="coupon-code-container">
+        <span class="coupon-label">รหัสคูปองส่วนลดของคุณ (Coupon Code)</span>
+        <div class="barcode-card">
+          <div class="barcode-wrapper" id="success-barcode-svg">
+            <!-- Dynamically generated SVG Barcode will be injected here -->
+          </div>
+          <div class="barcode-value-row">
+            <span class="code-text" id="success-coupon-code">CBW-BTL-9842A</span>
+            <button class="btn-copy-code" id="btn-copy-coupon-code" title="คัดลอกรหัส">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+        <small class="copy-success-message" id="copy-success-msg">คัดลอกรหัสเรียบร้อยแล้ว!</small>
+        <small class="barcode-instruction">แสดงบาร์โค้ดนี้แก่ร้านค้าเพื่อเปิดใช้งานส่วนลด</small>
+      </div>
+
+      <div class="success-actions-row">
+        <button class="btn btn-primary" id="btn-view-transaction-history">
+          <i class="fa-solid fa-receipt"></i> ดูประวัติการทำรายการ
+        </button>
+        <button class="btn btn-secondary-outline" id="btn-back-to-shop">
+          กลับไปช้อปรางวัล
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Blockchain Block Explorer Simulation -->
+  <div class="modal-overlay" id="blockchain-explorer-modal">
+    <div class="modal-card modal-explorer">
+      <div class="modal-explorer-header">
+        <div class="explorer-logo">
+          <i class="fa-solid fa-cube"></i>
+          <span>Carbon Ledger Explorer</span>
+        </div>
+        <button class="modal-close-btn" id="close-explorer-modal-btn">&times;</button>
+      </div>
+      <div class="modal-explorer-body">
+        <div class="explorer-status-badge">
+          <span class="dot-green pulsing"></span> บันทึกธุรกรรมสำเร็จในบล็อกที่ <b>#14,942,082</b>
+        </div>
+
+        <table class="explorer-table">
+          <tr>
+            <td>Transaction Hash</td>
+            <td class="hash-text" id="exp-tx-hash">0x8a72cf5be640e340e4f6a7d6d7e2...3f2b</td>
+          </tr>
+          <tr>
+            <td>Block Height</td>
+            <td>14,942,082 <span class="confirmations-badge">5 Confirmations</span></td>
+          </tr>
+          <tr>
+            <td>Timestamp</td>
+            <td id="exp-timestamp">13 มิ.ย. 2025 10:30:45</td>
+          </tr>
+          <tr>
+            <td>Action (ประเภท)</td>
+            <td id="exp-action">Redeem Reward</td>
+          </tr>
+          <tr>
+            <td>From (ผู้ใช้)</td>
+            <td class="hash-text">0x71C7656EC7ab88b098defB751B7401B5f6d8976F (คุณสมชาย)</td>
+          </tr>
+          <tr>
+            <td>To (ร้านค้า/ระบบ)</td>
+            <td class="hash-text">0x884029415ACd7b420f1885deD7614a9082F81c4e (CarbonWallet Vault)</td>
+          </tr>
+          <tr>
+            <td>Value Transferred</td>
+            <td class="points-val" id="exp-points-value">-300 Points</td>
+          </tr>
+          <tr>
+            <td>Network Fee</td>
+            <td>0.000025 GWEI (Sponsor by CarbonWallet)</td>
+          </tr>
+        </table>
+
+        <div class="explorer-block-visual">
+          <div class="block-node active">
+            <i class="fa-solid fa-link"></i>
+            <span>Block #14942081</span>
+          </div>
+          <div class="block-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="block-node active current">
+            <i class="fa-solid fa-cube"></i>
+            <span>Block #14942082 (TXN ID)</span>
+          </div>
+          <div class="block-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="block-node pending">
+            <i class="fa-solid fa-clock"></i>
+            <span>Block #14942083 (Pending)</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btn-close-explorer">ปิด Explorer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Alert Toast -->
+  <div class="toast" id="toast-message">
+    <i class="fa-solid fa-check-circle" id="toast-icon"></i>
+    <span id="toast-text">สำเร็จ!</span>
+  </div>
+
+  <!-- Core JavaScript Code -->
+  <script src="app.js?v=2.5"></script>
+</body>
+
+</html>
