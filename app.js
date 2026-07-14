@@ -100,7 +100,7 @@ const DEFAULT_REWARDS = [
 const DEFAULT_TRANSACTIONS = [
   {
     id: "TXN-20260713-0001",
-    title: "PromptGo - เดินลดคาร์บอน",
+    title: "PromptGo - นั่งรถไฟฟ้ามหาวิทยาลัย",
     points: 50,
     type: "received", // received, used, carbon
     date: "13 ก.ค. 2026",
@@ -735,7 +735,7 @@ function renderTransactions() {
     let titleVal = tx.title;
     let sourceVal = tx.source;
     if (appLanguage === "en") {
-      if (tx.title.includes("เดินลดคาร์บอน")) titleVal = "PromptGo - Walk & Save Carbon";
+      if (tx.title.includes("นั่งรถไฟฟ้ามหาวิทยาลัย")) titleVal = "PromptGo - University EV Shuttle Ride";
       else if (tx.title.includes("ขับขี่ปลอดภัยสวมหมวก")) titleVal = "Helmet App - Ride with Helmet";
       else if (tx.title.includes("แลกขวดน้ำเหล็ก")) titleVal = "Redeemed Steel Bottle - Flask";
       else if (tx.title.includes("เดินทางสาธารณะรถไฟฟ้า")) titleVal = "EV Bus - EV Transit Ride";
@@ -1334,8 +1334,8 @@ const TRANSLATIONS = {
     "act-1-points": "+20 Carbon Credit",
     "act-2-title": "สวมหมวกกันน็อกขับขี่ปลอดภัย",
     "act-2-desc": "ระบบยืนยันความปลอดภัย",
-    "act-3-title": "เดินสะสมครบ 10,000 ก้าว",
-    "act-3-desc": "ลดคาร์บอนได้ 1.5 kg"
+    "act-3-title": "นั่งรถไฟฟ้ามหาวิทยาลัย (PromptGo)",
+    "act-3-desc": "เรียกรถและเดินทางด้วยรถไฟฟ้ามหาลัยเพื่อรับคะแนนสะสม"
   },
   en: {
     // Navigation
@@ -1450,8 +1450,8 @@ const TRANSLATIONS = {
     "act-1-points": "+20 Carbon Credits",
     "act-2-title": "Safe Ride with Helmet (Helmet App)",
     "act-2-desc": "Journey recorded by AI safety system",
-    "act-3-title": "Walked 10,000 steps (PromptGo)",
-    "act-3-desc": "Saved 1.5 kg CO₂e emissions"
+    "act-3-title": "Ride University EV Shuttle (PromptGo)",
+    "act-3-desc": "Called and rode university electric shuttle to earn points"
   }
 };
 
