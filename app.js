@@ -17,82 +17,98 @@ const DEFAULT_USER = {
 const DEFAULT_REWARDS = [
   {
     id: "r1",
-    title: "Coffee Coupon",
+    titleTh: "คูปองส่วนลดร้านกาแฟ",
+    titleEn: "Coffee Coupon",
     points: 150,
     stock: 120,
     image: "images/coffee_coupon.png",
     category: "food",
-    description: "คูปองแลกรับกาแฟร้อนหรือเย็นแสนอร่อย ฟรี 1 แก้ว มูลค่าสูงสุด 80 บาท ที่ร้านกาแฟสไตล์มินิมอลที่ร่วมรายการ สามารถรับสิทธิ์ได้ทันทีโดยการยื่นรหัสกับบาริสต้าที่ร้าน",
+    descriptionTh: "คูปองแทนเงินสดสำหรับแลกเครื่องดื่มร้อนหรือเย็นฟรี 1 แก้ว (มูลค่าสูงสุด 80 บาท) ที่ร้านกาแฟในมหาวิทยาลัยที่ร่วมรายการ เพียงแสดงรหัสคูปองกับพนักงานเพื่อรับสิทธิ์",
+    descriptionEn: "Free 1 hot or iced beverage (up to 80 THB) at participating university coffee shops. Present this coupon to the barista.",
     redeemCount: 350
   },
   {
     id: "r2",
-    title: "Stainless Bottle",
+    titleTh: "แก้วเก็บอุณหภูมิ (Tumbler)",
+    titleEn: "Stainless Tumbler",
     points: 300,
     stock: 45,
     image: "images/stainless_bottle.png",
     category: "premium",
-    description: "กระบอกน้ำเก็บอุณหภูมิสแตนเลส (Thermal Flask) เก็บความเย็นได้นาน 24 ชั่วโมง และความร้อนได้ 12 ชั่วโมง ขนาดพกพา 500ml ทำจากวัสดุ Food-grade ไร้สารอันตราย ดีไซน์สีดำพรีเมียม ช่วยคุณลดการใช้ขวดพลาสติกเที่ยวเดียวได้อย่างมีสไตล์",
+    descriptionTh: "แก้วเก็บอุณหภูมิสเตนเลสขนาด 500ml เก็บความร้อนได้ 12 ชั่วโมง และความเย็นได้ 24 ชั่วโมง ผลิตจากวัสดุ Food-grade แข็งแรงทนทาน ช่วยลดการใช้แก้วพลาสติกแบบครั้งเดียวทิ้ง",
+    descriptionEn: "500ml double-wall stainless steel tumbler. Keeps drinks cold for 24 hours or hot for 12 hours. Food-grade and BPA-free.",
     redeemCount: 220
   },
   {
     id: "r3",
-    title: "T-Shirt (Eco Edition)",
+    titleTh: "เสื้อยืดรักษ์โลก (Eco Edition)",
+    titleEn: "Eco T-Shirt",
     points: 500,
     stock: 30,
     image: "images/tshirt.png",
     category: "premium",
-    description: "เสื้อยืดคอกลมลายรักษ์โลกสุดพรีเมียม ผลิตจากฝ้ายอินทรีย์ออร์แกนิก 100% (Organic Cotton) ไม่ผ่านสารเคมีที่เป็นพิษในการผลิต สวมใส่สบาย ระบายความร้อนดีเยี่ยม เหมาะสำหรับทุกกิจกรรมสีเขียว",
+    descriptionTh: "เสื้อยืดผ้าฝ้ายออร์แกนิกธรรมชาติ 100% สวมใส่สบาย ระบายอากาศได้ดี เหมาะสำหรับทุกกิจกรรม",
+    descriptionEn: "Premium t-shirt made from 100% organic cotton. Soft, breathable, and sustainably produced.",
     redeemCount: 95
   },
   {
     id: "r4",
-    title: "Grab Coupon 100B",
+    titleTh: "คูปองส่วนลด Grab 100 บาท",
+    titleEn: "Grab 100B Discount Coupon",
     points: 200,
     stock: 80,
     image: "images/grab_coupon.png",
     category: "coupon",
-    description: "ส่วนลดมูลค่า 100 บาท สำหรับใช้บริการ GrabCar, GrabBike หรือ GrabEV (รถพลังงานไฟฟ้า) เพื่อสนับสนุนการเดินทางที่ลดมลพิษในเมืองหลวง สามารถใช้รหัสนี้กรอกในช่อง Promo Code บนแอป Grab",
+    descriptionTh: "ส่วนลดค่าบริการเดินทาง Grab มูลค่า 100 บาท (ใช้ได้กับ GrabCar, GrabBike หรือ GrabEV) เพียงกรอกรหัสส่วนลดในแอปก่อนใช้บริการ",
+    descriptionEn: "100 THB discount coupon for Grab services (GrabCar, GrabBike, or GrabEV) to encourage eco-friendly travel.",
     redeemCount: 410
   },
   {
     id: "r5",
-    title: "Power Bank 10,000mAh",
+    titleTh: "แบตเตอรี่สำรอง 10,000mAh",
+    titleEn: "10,000mAh Power Bank",
     points: 700,
     stock: 15,
     image: "images/powerbank.png",
     category: "electronics",
-    description: "แบตเตอรี่สำรองขนาดความจุ 10,000 mAh ที่บางเบาและชาร์จเร็ว รองรับระบบ PD (Power Delivery) ดีไซน์ล้ำสมัยพร้อมหน้าจอดิจิทัลแสดงผลเปอร์เซ็นต์พลังงานที่เหลือ ผลิตจากวัสดุรีไซเคิลถึง 40% แข็งแรงทนทานปลอดภัยสูง",
+    descriptionTh: "แบตเตอรี่สำรองความจุ 10,000 mAh รองรับระบบชาร์จเร็ว พกพาสะดวก ผลิตจากวัสดุรีไซเคิล ปลอดภัยสูง",
+    descriptionEn: "Sleek 10,000 mAh power bank with fast-charging support. Made from 40% recycled materials.",
     redeemCount: 140
   },
   {
     id: "r6",
-    title: "Eco Umbrella",
+    titleTh: "ร่มพับรักษ์โลก (Eco Umbrella)",
+    titleEn: "Eco Umbrella",
     points: 400,
     stock: 25,
     image: "images/umbrella.png",
     category: "premium",
-    description: "ร่มพับพรีเมียมกันแดดกันฝนและรังสี UV 100% ตัวผ้าร่มรีไซเคิลจากขวดพลาสติก PET โครงร่มแข็งแรงทนทานทำจากอลูมิเนียมเกรดพิเศษพร้อมด้ามจับที่ทำจากไม้บีชแท้ ดีไซน์คลาสสิก พกพาสะดวกไปได้ในทุกที่",
+    descriptionTh: "ร่มพับกันแดดกันฝนและรังสี UV ตัวผ้าร่มรีไซเคิลจากขวดพลาสติก PET โครงสร้างและด้ามจับไม้ธรรมชาติ แข็งแรง พกพาสะดวก",
+    descriptionEn: "Eco-friendly folding umbrella with UV protection. Canopy made from recycled PET plastic bottles.",
     redeemCount: 88
   },
   {
     id: "r7",
-    title: "Movie Ticket (Deluxe)",
+    titleTh: "ตั๋วชมภาพยนตร์ฟรี 1 ที่นั่ง",
+    titleEn: "Free Movie Ticket (Deluxe)",
     points: 250,
     stock: 60,
     image: "images/movie_ticket.png",
     category: "others",
-    description: "บัตรชมภาพยนตร์ฟรี 1 ที่นั่ง สำหรับที่นั่งประเภท Deluxe ในโรงภาพยนตร์ระบบปกติและ 2D สามารถกดรับสิทธิ์แลกตั๋วที่ตู้อัตโนมัติหรือหน้าเคาน์เตอร์จำหน่ายตั๋วได้ทั่วประเทศ",
+    descriptionTh: "ตั๋วชมภาพยนตร์ที่นั่งประเภท Deluxe 1 ที่นั่ง สำหรับชมภาพยนตร์ระบบปกติ 2D ที่โรงภาพยนตร์เมเจอร์ ซีนีเพล็กซ์ หรือเอสเอฟ ซีนีม่า ทุกสาขา",
+    descriptionEn: "Free 1 Deluxe seat ticket for regular 2D movie screenings at Major Cineplex or SF Cinema locations.",
     redeemCount: 290
   },
   {
     id: "r8",
-    title: "Central Coupon 200B",
+    titleTh: "คูปองแทนเงินสดเซ็นทรัล 200 บาท",
+    titleEn: "Central 200B Gift Voucher",
     points: 350,
     stock: 40,
     image: "images/central_coupon.png",
     category: "coupon",
-    description: "บัตรของขวัญอิเล็กทรอนิกส์ (E-Gift Voucher) มูลค่า 200 บาท สำหรับใช้แทนเงินสดในการซื้อสินค้าในห้างสรรพสินค้าเซ็นทรัล และมาร์คแอนด์สเปนเซอร์ ทุกสาขา ไม่มีข้อกำหนดขั้นต่ำ สะดวกและลดขยะกระดาษ",
+    descriptionTh: "คูปองแทนเงินสดอิเล็กทรอนิกส์ มูลค่า 200 บาท สำหรับใช้ซื้อสินค้าที่ห้างสรรพสินค้าเซ็นทรัลทุกสาขา ไม่มีขั้นต่ำในการช้อป",
+    descriptionEn: "200 THB E-Gift Voucher to purchase items at Central Department Store. No minimum spend required.",
     redeemCount: 180
   }
 ];
@@ -122,7 +138,7 @@ const DEFAULT_TRANSACTIONS = [
   },
   {
     id: "TXN-20260712-0001",
-    title: "แลกขวดน้ำเหล็ก - Bottle",
+    title: "แลกแก้วเก็บอุณหภูมิ - Tumbler",
     points: -300,
     type: "used",
     date: "12 ก.ค. 2026",
@@ -363,6 +379,9 @@ function renderRewards() {
     card.className = "reward-card";
     card.addEventListener("click", () => openRewardDetailModal(item));
     
+    // Localize title
+    const rewardTitle = appLanguage === "th" ? item.titleTh : item.titleEn;
+    
     // Category readable name
     const categoryName = getCategoryName(item.category);
     const stockText = appLanguage === "th"
@@ -372,11 +391,11 @@ function renderRewards() {
     
     card.innerHTML = `
       <div class="reward-card-image-wrapper">
-        <img src="${item.image}" alt="${item.title}">
+        <img src="${item.image}" alt="${rewardTitle}">
         <span class="category-tag">${categoryName}</span>
       </div>
       <div class="reward-card-body">
-        <h3 class="reward-title">${item.title}</h3>
+        <h3 class="reward-title">${rewardTitle}</h3>
         <div class="reward-points">${item.points} Points</div>
         <div class="reward-stock">
           ${stockText}
@@ -451,14 +470,17 @@ let currentSelectedReward = null;
 function openRewardDetailModal(reward) {
   currentSelectedReward = reward;
   
+  const title = appLanguage === "th" ? reward.titleTh : reward.titleEn;
+  const description = appLanguage === "th" ? reward.descriptionTh : reward.descriptionEn;
+  
   document.getElementById("detail-modal-image").src = reward.image;
   document.getElementById("detail-modal-category").innerText = getCategoryName(reward.category);
-  document.getElementById("detail-modal-title").innerText = reward.title;
+  document.getElementById("detail-modal-title").innerText = title;
   document.getElementById("detail-modal-points").innerText = `${reward.points} Points`;
   document.getElementById("detail-modal-stock").innerText = appLanguage === "th"
     ? `คงเหลือ ${reward.stock} ชิ้น`
     : `${reward.stock} units remaining`;
-  document.getElementById("detail-modal-desc").innerText = reward.description;
+  document.getElementById("detail-modal-desc").innerText = description;
   
   const modal = document.getElementById("reward-detail-modal");
   modal.classList.add("active");
@@ -475,9 +497,11 @@ function openConfirmRedemption(reward) {
   currentSelectedReward = reward;
   closeRewardDetailModal(); // Close detail modal if open
   
+  const title = appLanguage === "th" ? reward.titleTh : reward.titleEn;
+  
   // Bind preview details
   document.getElementById("confirm-modal-item-img").src = reward.image;
-  document.getElementById("confirm-modal-item-title").innerText = reward.title;
+  document.getElementById("confirm-modal-item-title").innerText = title;
   document.getElementById("confirm-modal-item-points").innerText = `-${reward.points} Points`;
   
   // Calculate summary box
@@ -552,9 +576,11 @@ function executeRedemption() {
     const currentDate = getCurrentDateString();
     const currentTime = getThaiCurrentTimeString();
     
+    const title = appLanguage === "th" ? reward.titleTh : reward.titleEn;
+    
     const newTx = {
       id: newTxId,
-      title: appLanguage === "th" ? `แลกรับของรางวัล - ${reward.title}` : `Redeemed Reward - ${reward.title}`,
+      title: appLanguage === "th" ? `แลกรับของรางวัล - ${title}` : `Redeemed Reward - ${title}`,
       points: -reward.points,
       type: "used",
       date: currentDate,
@@ -569,7 +595,7 @@ function executeRedemption() {
     // Add success notification
     notificationsState.unshift({
       id: `n-${Date.now()}`,
-      text: appLanguage === "th" ? `แลกของรางวัล ${reward.title} สำเร็จแล้ว!` : `Redeemed ${reward.title} successfully!`,
+      text: appLanguage === "th" ? `แลกของรางวัล ${title} สำเร็จแล้ว!` : `Redeemed ${title} successfully!`,
       time: appLanguage === "th" ? "เมื่อสักครู่" : "Just now",
       icon: "fa-circle-check",
       unread: true
@@ -640,9 +666,10 @@ function getThaiCurrentTimeString() {
 // REDEEM SUCCESS MODAL
 // ==========================================
 function openSuccessModal(reward) {
+  const title = appLanguage === "th" ? reward.titleTh : reward.titleEn;
   const subtitleText = appLanguage === "th" 
-    ? `คุณได้แลก <span id="success-item-name" class="highlight">${reward.title}</span> เรียบร้อยแล้ว` 
-    : `You have redeemed <span id="success-item-name" class="highlight">${reward.title}</span> successfully.`;
+    ? `คุณได้แลก <span id="success-item-name" class="highlight">${title}</span> เรียบร้อยแล้ว` 
+    : `You have redeemed <span id="success-item-name" class="highlight">${title}</span> successfully.`;
   document.getElementById("success-subtitle-text").innerHTML = subtitleText;
   
   document.getElementById("success-points-spent").innerText = `-${reward.points} Points`;
