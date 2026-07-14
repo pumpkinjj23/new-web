@@ -1312,7 +1312,7 @@ const TRANSLATIONS = {
     "btn-cancel": "ยกเลิก",
     "btn-confirm": "ยืนยัน",
     
-    "modal-success-title": "แลกของรางวัลสำเร็จ!",
+    "modal-success-title": "แลกสำเร็จแล้ว",
     "success-msg-prefix": "คุณได้ทำการแลกรับ ",
     "success-msg-suffix": " เรียบร้อยแล้ว",
     "success-spent": "คะแนนที่ใช้",
