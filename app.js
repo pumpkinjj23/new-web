@@ -100,12 +100,12 @@ const DEFAULT_REWARDS = [
 const DEFAULT_TRANSACTIONS = [
   {
     id: "TXN-20260713-0001",
-    title: "PromptGo - นั่งรถไฟฟ้ามหาวิทยาลัย",
+    title: "เดินลดคาร์บอน",
     points: 50,
     type: "received", // received, used, carbon
     date: "13 ก.ค. 2026",
     time: "10:30:45",
-    source: "PromptGo App",
+    source: "Health Tracker",
     status: "Completed",
     hash: "0x8a72cf5be640e340e4f6a7d6d7e2f5e714942082b"
   },
@@ -133,12 +133,12 @@ const DEFAULT_TRANSACTIONS = [
   },
   {
     id: "TXN-20260712-0002",
-    title: "EV Bus - เดินทางสาธารณะรถไฟฟ้า",
+    title: "PromptGo - นั่ง Prompt go",
     points: 20,
     type: "carbon", // Shown in Carbon Credit tab
     date: "12 ก.ค. 2026",
     time: "09:30:00",
-    source: "EV Bus Linker",
+    source: "PromptGo App",
     status: "Completed",
     hash: "0x4ae89cd5ef182a4d3cfc78a0189bda8a984029415"
   },
@@ -735,10 +735,9 @@ function renderTransactions() {
     let titleVal = tx.title;
     let sourceVal = tx.source;
     if (appLanguage === "en") {
-      if (tx.title.includes("นั่งรถไฟฟ้ามหาวิทยาลัย")) titleVal = "PromptGo - University EV Shuttle Ride";
+      if (tx.title.includes("นั่ง Prompt go")) titleVal = "PromptGo - Ride Prompt go";
+      else if (tx.title.includes("เดินลดคาร์บอน")) titleVal = "Walk & Save Carbon";
       else if (tx.title.includes("ขับขี่ปลอดภัยสวมหมวก")) titleVal = "Helmet App - Ride with Helmet";
-      else if (tx.title.includes("แลกขวดน้ำเหล็ก")) titleVal = "Redeemed Steel Bottle - Flask";
-      else if (tx.title.includes("เดินทางสาธารณะรถไฟฟ้า")) titleVal = "EV Bus - EV Transit Ride";
       else if (tx.title.includes("คูปองกาแฟร้อน")) titleVal = "Coffee Coupon - Hot Coffee";
       else if (tx.title.includes("แลกรับของรางวัล - ")) {
         titleVal = tx.title.replace("แลกรับของรางวัล - ", "Redeemed Reward - ");
@@ -1329,13 +1328,13 @@ const TRANSLATIONS = {
     "ach-2-title": "อร่อยรักษ์โลก",
     "ach-3-title": "ผู้พิทักษ์คาร์บอน",
     "ach-4-title": "นักสะสมของพรีเมียม",
-    "act-1-title": "นั่งรถเมล์ไฟฟ้า (EV)",
-    "act-1-desc": "ลดคาร์บอนได้ 3.2 kg",
+    "act-1-title": "นั่ง Prompt go",
+    "act-1-desc": "เรียกรถและเดินทางด้วยรถไฟฟ้ามหาลัยเพื่อรับคะแนน",
     "act-1-points": "+20 Carbon Credit",
     "act-2-title": "สวมหมวกกันน็อกขับขี่ปลอดภัย",
     "act-2-desc": "ระบบยืนยันความปลอดภัย",
-    "act-3-title": "นั่งรถไฟฟ้ามหาวิทยาลัย (PromptGo)",
-    "act-3-desc": "เรียกรถและเดินทางด้วยรถไฟฟ้ามหาลัยเพื่อรับคะแนนสะสม"
+    "act-3-title": "เดินสะสมครบ 10,000 ก้าว",
+    "act-3-desc": "ลดคาร์บอน 1.5 kg"
   },
   en: {
     // Navigation
@@ -1445,13 +1444,13 @@ const TRANSLATIONS = {
     "ach-2-title": "Eco Foodie",
     "ach-3-title": "Carbon Hero",
     "ach-4-title": "Elite Collector",
-    "act-1-title": "Traveled by EV Public Bus",
-    "act-1-desc": "Saved 3.2 kg CO₂e emissions",
+    "act-1-title": "Ride Prompt go",
+    "act-1-desc": "Rode university electric shuttle to earn points",
     "act-1-points": "+20 Carbon Credits",
     "act-2-title": "Safe Ride with Helmet (Helmet App)",
     "act-2-desc": "Journey recorded by AI safety system",
-    "act-3-title": "Ride University EV Shuttle (PromptGo)",
-    "act-3-desc": "Called and rode university electric shuttle to earn points"
+    "act-3-title": "Walked 10,000 steps",
+    "act-3-desc": "Saved 1.5 kg CO₂e emissions"
   }
 };
 
