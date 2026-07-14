@@ -218,8 +218,41 @@ function loadFromLocalStorage() {
   const cachedNotifications = localStorage.getItem("cw_notifications");
   
   if (cachedUser) userState = JSON.parse(cachedUser);
-  if (cachedRewards) rewardsState = JSON.parse(cachedRewards);
-  if (cachedTransactions) transactionsState = JSON.parse(cachedTransactions);
+  
+  if (cachedRewards) {
+    const parsed = JSON.parse(cachedRewards);
+    rewardsState = parsed.map(item => {
+      const defaultItem = DEFAULT_REWARDS.find(r => r.id === item.id);
+      if (defaultItem) {
+        return {
+          ...item,
+          titleTh: defaultItem.titleTh,
+          titleEn: defaultItem.titleEn,
+          descriptionTh: defaultItem.descriptionTh,
+          descriptionEn: defaultItem.descriptionEn
+        };
+      }
+      return item;
+    });
+  }
+  
+  if (cachedTransactions) {
+    let parsed = JSON.parse(cachedTransactions);
+    parsed = parsed.map(tx => {
+      if (tx.title === "แลกขวดน้ำเหล็ก - Bottle") {
+        tx.title = "แลกแก้วเก็บอุณหภูมิ - Tumbler";
+      }
+      if (tx.title === "PromptGo - นั่งรถไฟฟ้ามหาวิทยาลัย" || tx.title === "EV Bus - เดินทางสาธารณะรถไฟฟ้า") {
+        tx.title = "PromptGo - นั่ง Prompt go";
+      }
+      if (tx.source === "EV Bus Linker") {
+        tx.source = "PromptGo App";
+      }
+      return tx;
+    });
+    transactionsState = parsed;
+  }
+  
   if (cachedNotifications) {
     notificationsState = JSON.parse(cachedNotifications);
   } else {
