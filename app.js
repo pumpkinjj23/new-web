@@ -4,17 +4,14 @@
 
 // Default Initial Data
 const DEFAULT_USER = {
-  firstName: "สมชาย",
-  lastName: "รักดี",
-  code: "CW-88492",
+  firstName: "Somchai",
+  lastName: "Rakdee",
+  studentId: "651234567",
   points: 1250,
-  level: 3,
-  xp: 850,
-  xpMax: 1000,
-  carbonSaved: 148.5, // in kg CO2e
-  walletAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-  email: "somchai.rakdee@example.com",
-  phone: "089-123-4567"
+  email: "somchai.r@psru.ac.th",
+  phone: "089-123-4567",
+  faculty: "Science and Technology",
+  major: "Computer Science"
 };
 
 const DEFAULT_REWARDS = [
@@ -241,10 +238,10 @@ function initRouting() {
       });
       
       // Update Top Header Display Title
-      let pageTitleText = "หน้าหลัก (Dashboard)";
-      if (targetViewId === "rewards-view") pageTitleText = "แลกของรางวัล (Rewards)";
-      if (targetViewId === "transactions-view") pageTitleText = "ประวัติรายการ (Transactions)";
-      if (targetViewId === "profile-view") pageTitleText = "โปรไฟล์และข้อมูลผู้ใช้";
+      let pageTitleText = appLanguage === "th" ? "หน้าหลัก" : "Dashboard";
+      if (targetViewId === "rewards-view") pageTitleText = appLanguage === "th" ? "แลกของรางวัล" : "Rewards";
+      if (targetViewId === "transactions-view") pageTitleText = appLanguage === "th" ? "ประวัติรายการ" : "Transactions";
+      if (targetViewId === "profile-view") pageTitleText = appLanguage === "th" ? "โปรไฟล์นักศึกษา" : "Student Profile";
       document.getElementById("page-title-display").innerText = pageTitleText;
       
       // Additional View Initialization logic
@@ -286,14 +283,21 @@ function syncUI() {
   
   // 3. Sidebar Profile name & code
   document.getElementById("user-name-sidebar").innerText = `${userState.firstName} ${userState.lastName}`;
-  document.getElementById("user-code-sidebar").innerText = userState.code;
+  document.getElementById("user-code-sidebar").innerText = userState.studentId;
   
   // Header profile name
   const headerName = document.getElementById("header-username-display");
   if (headerName) headerName.innerText = `${userState.firstName} ${userState.lastName}`;
   
   // 4. Welcome banner name
-  document.getElementById("user-display-name").innerText = `คุณ${userState.firstName} ${userState.lastName}`;
+  const welcomeTitle = document.querySelector(".welcome-text-wrapper h2");
+  if (welcomeTitle) {
+    if (appLanguage === "th") {
+      welcomeTitle.innerHTML = `สวัสดี, <span id="user-display-name">คุณ${userState.firstName} ${userState.lastName}</span>! 👋`;
+    } else {
+      welcomeTitle.innerHTML = `Hello, <span id="user-display-name">${userState.firstName} ${userState.lastName}</span>! 👋`;
+    }
+  }
   
   // 5. Sync avatar images if custom avatar exists
   if (userState.avatar) {
@@ -301,12 +305,15 @@ function syncUI() {
     document.getElementById("sidebar-avatar-img").src = userState.avatar;
     const headerAvatar = document.getElementById("header-avatar-img");
     if (headerAvatar) headerAvatar.src = userState.avatar;
-    const leaderboardAvatar = document.getElementById("leaderboard-avatar-img");
-    if (leaderboardAvatar) leaderboardAvatar.src = userState.avatar;
   }
   
   // 6. Sync notifications list and badge
   renderNotifications();
+
+  // 7. Update translations across static elements
+  if (typeof translateApp === "function") {
+    translateApp();
+  }
 }
 
 // ==========================================
@@ -339,10 +346,13 @@ function renderRewards() {
   }
   
   if (filtered.length === 0) {
+    const noResultsMsg = appLanguage === "th" 
+      ? "ไม่พบของรางวัลที่ค้นหา กรุณาลองใช้คีย์เวิร์ดอื่น" 
+      : "No rewards found. Please try another keyword.";
     container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-muted);">
         <i class="fa-solid fa-box-open" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-        <p>ไม่พบของรางวัลที่ค้นหา กรุณาลองใช้คีย์เวิร์ดอื่น</p>
+        <p>${noResultsMsg}</p>
       </div>
     `;
     return;
@@ -354,20 +364,24 @@ function renderRewards() {
     card.addEventListener("click", () => openRewardDetailModal(item));
     
     // Category readable name
-    const categoryThai = getCategoryThaiName(item.category);
+    const categoryName = getCategoryName(item.category);
+    const stockText = appLanguage === "th"
+      ? `<i class="fa-solid fa-box"></i> คงเหลือ ${item.stock} ชิ้น`
+      : `<i class="fa-solid fa-box"></i> ${item.stock} units remaining`;
+    const redeemText = appLanguage === "th" ? "แลกเลย" : "Redeem";
     
     card.innerHTML = `
       <div class="reward-card-image-wrapper">
         <img src="${item.image}" alt="${item.title}">
-        <span class="category-tag">${categoryThai}</span>
+        <span class="category-tag">${categoryName}</span>
       </div>
       <div class="reward-card-body">
         <h3 class="reward-title">${item.title}</h3>
         <div class="reward-points">${item.points} Points</div>
         <div class="reward-stock">
-          <i class="fa-solid fa-box"></i> คงเหลือ ${item.stock} ชิ้น
+          ${stockText}
         </div>
-        <button class="reward-btn" data-id="${item.id}">แลกเลย</button>
+        <button class="reward-btn" data-id="${item.id}">${redeemText}</button>
       </div>
     `;
     
@@ -382,13 +396,23 @@ function renderRewards() {
   });
 }
 
-function getCategoryThaiName(cat) {
-  switch (cat) {
-    case "food": return "อาหาร & เครื่องดื่ม";
-    case "coupon": return "คูปองส่วนลด";
-    case "premium": return "ของพรีเมียม";
-    case "electronics": return "อิเล็กทรอนิกส์";
-    default: return "อื่นๆ";
+function getCategoryName(cat) {
+  if (appLanguage === "th") {
+    switch (cat) {
+      case "food": return "อาหาร & เครื่องดื่ม";
+      case "coupon": return "คูปองส่วนลด";
+      case "premium": return "ของพรีเมียม";
+      case "electronics": return "อิเล็กทรอนิกส์";
+      default: return "อื่นๆ";
+    }
+  } else {
+    switch (cat) {
+      case "food": return "Food & Drinks";
+      case "coupon": return "Coupons";
+      case "premium": return "Premium Goods";
+      case "electronics": return "Electronics";
+      default: return "Others";
+    }
   }
 }
 
@@ -428,10 +452,12 @@ function openRewardDetailModal(reward) {
   currentSelectedReward = reward;
   
   document.getElementById("detail-modal-image").src = reward.image;
-  document.getElementById("detail-modal-category").innerText = getCategoryThaiName(reward.category);
+  document.getElementById("detail-modal-category").innerText = getCategoryName(reward.category);
   document.getElementById("detail-modal-title").innerText = reward.title;
   document.getElementById("detail-modal-points").innerText = `${reward.points} Points`;
-  document.getElementById("detail-modal-stock").innerText = `คงเหลือ ${reward.stock} ชิ้น`;
+  document.getElementById("detail-modal-stock").innerText = appLanguage === "th"
+    ? `คงเหลือ ${reward.stock} ชิ้น`
+    : `${reward.stock} units remaining`;
   document.getElementById("detail-modal-desc").innerText = reward.description;
   
   const modal = document.getElementById("reward-detail-modal");
@@ -463,9 +489,14 @@ function openConfirmRedemption(reward) {
   document.getElementById("confirm-points-to-deduct").innerText = `-${deduct.toLocaleString()}`;
   document.getElementById("confirm-points-remaining").innerText = remaining.toLocaleString();
   
+  // Set message text based on language
+  document.getElementById("confirm-redemption-msg-text").innerText = appLanguage === "th" 
+    ? "คุณแน่ใจหรือไม่ว่าจะใช้แต้มคาร์บอนแลกรับของรางวัลนี้?" 
+    : "Are you sure you want to use carbon points to redeem this reward?";
+
   // Reset confirmation button loading state
   const confirmBtn = document.getElementById("btn-confirm-redeem-action");
-  confirmBtn.innerHTML = "กดยืนยันการแลกรางวัล";
+  confirmBtn.innerHTML = appLanguage === "th" ? "กดยืนยันการแลกรางวัล" : "Confirm Redemption";
   confirmBtn.disabled = false;
   
   // Open confirm modal
@@ -484,20 +515,28 @@ function executeRedemption() {
   
   // 1. Check points balance
   if (userState.points < reward.points) {
-    showToast("คะแนนของคุณไม่เพียงพอสำหรับการแลกรับรางวัลนี้", "error");
+    const balanceError = appLanguage === "th" 
+      ? "คะแนนของคุณไม่เพียงพอสำหรับการแลกรับรางวัลนี้" 
+      : "Insufficient points to redeem this reward.";
+    showToast(balanceError, "error");
     closeConfirmRedemption();
     return;
   }
   
   // 2. Check item stock
   if (reward.stock <= 0) {
-    showToast("ขออภัย! ของรางวัลชิ้นนี้หมดชั่วคราว", "error");
+    const stockError = appLanguage === "th" 
+      ? "ขออภัย! ของรางวัลชิ้นนี้หมดชั่วคราว" 
+      : "Sorry, this reward is temporarily out of stock.";
+    showToast(stockError, "error");
     closeConfirmRedemption();
     return;
   }
   
   const confirmBtn = document.getElementById("btn-confirm-redeem-action");
-  confirmBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> กำลังดำเนินการ...';
+  confirmBtn.innerHTML = appLanguage === "th" 
+    ? '<i class="fa-solid fa-circle-notch fa-spin"></i> กำลังดำเนินการ...'
+    : '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
   confirmBtn.disabled = true;
   
   // Simulate smart contract / network confirmation delay (1.5 seconds)
@@ -510,16 +549,16 @@ function executeRedemption() {
     // 4. Generate transaction record
     const newTxId = `TXN-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${Math.floor(1000 + Math.random() * 9000)}`;
     const newHash = "0x" + Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
-    const thaiDate = getThaiCurrentDateString();
-    const thaiTime = getThaiCurrentTimeString();
+    const currentDate = getCurrentDateString();
+    const currentTime = getThaiCurrentTimeString();
     
     const newTx = {
       id: newTxId,
-      title: `แลกรับของรางวัล - ${reward.title}`,
+      title: appLanguage === "th" ? `แลกรับของรางวัล - ${reward.title}` : `Redeemed Reward - ${reward.title}`,
       points: -reward.points,
       type: "used",
-      date: thaiDate,
-      time: thaiTime,
+      date: currentDate,
+      time: currentTime,
       source: "CarbonWallet Shop",
       status: "Completed",
       hash: newHash
@@ -530,8 +569,8 @@ function executeRedemption() {
     // Add success notification
     notificationsState.unshift({
       id: `n-${Date.now()}`,
-      text: `แลกของรางวัล ${reward.title} สำเร็จแล้ว!`,
-      time: "เมื่อสักครู่",
+      text: appLanguage === "th" ? `แลกของรางวัล ${reward.title} สำเร็จแล้ว!` : `Redeemed ${reward.title} successfully!`,
+      time: appLanguage === "th" ? "เมื่อสักครู่" : "Just now",
       icon: "fa-circle-check",
       unread: true
     });
@@ -546,10 +585,11 @@ function executeRedemption() {
     closeConfirmRedemption();
     
     // 5. Open Success modal
-    openSuccessModal(reward, newTx);
+    openSuccessModal(reward);
     
     // Toast alert
-    showToast("แลกของรางวัลสำเร็จเรียบร้อย!", "success");
+    const toastMsg = appLanguage === "th" ? "แลกของรางวัลสำเร็จเรียบร้อย!" : "Redeemed successfully!";
+    showToast(toastMsg, "success");
     
   }, 1500);
 }
@@ -563,6 +603,34 @@ function getThaiCurrentDateString() {
   return `${day} ${month} ${year}`;
 }
 
+function getCurrentDateString() {
+  if (appLanguage === "th") {
+    return getThaiCurrentDateString();
+  } else {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const d = new Date();
+    const day = d.getDate();
+    const month = months[d.getMonth()];
+    const year = d.getFullYear();
+    return `${month} ${day}, ${year}`;
+  }
+}
+
+function localizeDate(dateStr) {
+  if (appLanguage === "en") {
+    const thMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+    const enMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let result = dateStr;
+    thMonths.forEach((thMonth, idx) => {
+      if (result.includes(thMonth)) {
+        result = result.replace(thMonth, enMonths[idx]);
+      }
+    });
+    return result;
+  }
+  return dateStr;
+}
+
 function getThaiCurrentTimeString() {
   const d = new Date();
   return d.toTimeString().split(" ")[0]; // returns hh:mm:ss
@@ -571,26 +639,14 @@ function getThaiCurrentTimeString() {
 // ==========================================
 // REDEEM SUCCESS MODAL
 // ==========================================
-function openSuccessModal(reward, tx) {
-  document.getElementById("success-item-name").innerText = reward.title;
+function openSuccessModal(reward) {
+  const subtitleText = appLanguage === "th" 
+    ? `คุณได้แลก <span id="success-item-name" class="highlight">${reward.title}</span> เรียบร้อยแล้ว` 
+    : `You have redeemed <span id="success-item-name" class="highlight">${reward.title}</span> successfully.`;
+  document.getElementById("success-subtitle-text").innerHTML = subtitleText;
+  
   document.getElementById("success-points-spent").innerText = `-${reward.points} Points`;
   document.getElementById("success-points-remaining").innerText = `${userState.points.toLocaleString()} Points`;
-  
-  // Generate random voucher coupon code
-  const codeSuffix = Math.random().toString(36).substring(2, 7).toUpperCase();
-  // Ensure the title prefix is safe for Code 39
-  const titlePrefix = reward.title.substring(0, 3).toUpperCase().replace(/[^A-Z0-9-]/g, '-');
-  const couponCode = `CW-${titlePrefix}-${codeSuffix}`;
-  document.getElementById("success-coupon-code").innerText = couponCode;
-  
-  // Render Barcode SVG
-  const barcodeWrapper = document.getElementById("success-barcode-svg");
-  if (barcodeWrapper) {
-    barcodeWrapper.innerHTML = generateBarcodeSVG(couponCode);
-  }
-  
-  // Hide copy notification
-  document.getElementById("copy-success-msg").style.display = "none";
   
   const modal = document.getElementById("success-redeem-modal");
   modal.classList.add("active");
@@ -601,18 +657,6 @@ function openSuccessModal(reward, tx) {
 
 function closeSuccessModal() {
   document.getElementById("success-redeem-modal").classList.remove("active");
-}
-
-// Copy Coupon Code to Clipboard
-function copyCouponCode() {
-  const code = document.getElementById("success-coupon-code").innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    const msg = document.getElementById("copy-success-msg");
-    msg.style.display = "block";
-    setTimeout(() => {
-      msg.style.display = "none";
-    }, 2500);
-  });
 }
 
 // Confetti Particle Effect Generator
@@ -667,10 +711,11 @@ function renderTransactions() {
   });
   
   if (filtered.length === 0) {
+    const emptyMsg = appLanguage === "th" ? "ไม่พบประวัติรายการที่สอดคล้อง" : "No matching transaction history found.";
     container.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
         <i class="fa-solid fa-receipt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-        <p>ไม่พบประวัติรายการที่สอดคล้อง</p>
+        <p>${emptyMsg}</p>
       </div>
     `;
     return;
@@ -687,16 +732,31 @@ function renderTransactions() {
     const pointsClass = isPositive ? "plus" : "minus";
     const iconClass = isPositive ? "fa-arrow-trend-up tx-received" : "fa-arrow-trend-down tx-used";
     
+    let titleVal = tx.title;
+    let sourceVal = tx.source;
+    if (appLanguage === "en") {
+      if (tx.title.includes("เดินลดคาร์บอน")) titleVal = "PromptGo - Walk & Save Carbon";
+      else if (tx.title.includes("ขับขี่ปลอดภัยสวมหมวก")) titleVal = "Helmet App - Ride with Helmet";
+      else if (tx.title.includes("แลกขวดน้ำเหล็ก")) titleVal = "Redeemed Steel Bottle - Flask";
+      else if (tx.title.includes("เดินทางสาธารณะรถไฟฟ้า")) titleVal = "EV Bus - EV Transit Ride";
+      else if (tx.title.includes("คูปองกาแฟร้อน")) titleVal = "Coffee Coupon - Hot Coffee";
+      else if (tx.title.includes("แลกรับของรางวัล - ")) {
+        titleVal = tx.title.replace("แลกรับของรางวัล - ", "Redeemed Reward - ");
+      }
+    }
+    
+    const localizedDateStr = localizeDate(tx.date);
+    
     row.innerHTML = `
       <div class="tx-icon-badge ${pointsClass === 'plus' ? 'tx-received' : 'tx-used'}">
         <i class="fa-solid ${iconClass}"></i>
       </div>
       <div class="tx-details">
-        <h4 class="tx-title">${tx.title}</h4>
+        <h4 class="tx-title">${titleVal}</h4>
         <div class="tx-meta">
-          <span>${tx.date}</span>
+          <span>${localizedDateStr}</span>
           <span>•</span>
-          <span>${tx.source}</span>
+          <span>${sourceVal}</span>
         </div>
       </div>
       <div class="tx-points-col">
@@ -722,72 +782,81 @@ function selectTransaction(tx) {
   const sign = isPositive ? "+" : "";
   const pointsClass = isPositive ? "points-green" : "points-red";
   
+  const detailTitle = appLanguage === "th" ? "รายละเอียดรายการ" : "Transaction Details";
+  const labelId = appLanguage === "th" ? "ID รายการ" : "Transaction ID";
+  const labelDate = appLanguage === "th" ? "วันที่ทำรายการ" : "Date";
+  const labelTime = appLanguage === "th" ? "เวลา" : "Time";
+  const labelType = appLanguage === "th" ? "ประเภทกิจกรรม" : "Activity Type";
+  const labelSource = appLanguage === "th" ? "แหล่งอ้างอิง" : "Source";
+  const labelPoints = appLanguage === "th" ? "คะแนนสะสม" : "Points Balance";
+  const labelStatus = appLanguage === "th" ? "สถานะรายการ" : "Status";
+  
+  let typeVal = "";
+  if (appLanguage === "th") {
+    typeVal = tx.type === 'received' ? 'ได้รับ Points' : tx.type === 'used' ? 'ใช้ไป (Redemption)' : 'ได้รับ Carbon Credit';
+  } else {
+    typeVal = tx.type === 'received' ? 'Earned Points' : tx.type === 'used' ? 'Used (Redemption)' : 'Earned Carbon Credit';
+  }
+  
+  let statusVal = tx.status;
+  if (tx.status === "Completed") {
+    statusVal = appLanguage === "th" ? "สำเร็จ" : "Completed";
+  }
+  
   panel.innerHTML = `
     <div class="active-detail-container">
-      <h3 class="detail-panel-title">รายละเอียดรายการ</h3>
+      <h3 class="detail-panel-title">${detailTitle}</h3>
       
       <table class="detail-table">
         <tr>
-          <td>ID รายการ</td>
+          <td>${labelId}</td>
           <td>${tx.id}</td>
         </tr>
         <tr>
-          <td>วันที่ทำรายการ</td>
-          <td>${tx.date}</td>
+          <td>${labelDate}</td>
+          <td>${localizeDate(tx.date)}</td>
         </tr>
         <tr>
-          <td>เวลา</td>
+          <td>${labelTime}</td>
           <td>${tx.time}</td>
         </tr>
         <tr>
-          <td>ประเภทกิจกรรม</td>
-          <td>${tx.type === 'received' ? 'ได้รับ Points' : tx.type === 'used' ? 'ใช้ไป (Redemption)' : 'ได้รับ Carbon Credit'}</td>
+          <td>${labelType}</td>
+          <td>${typeVal}</td>
         </tr>
         <tr>
-          <td>แหล่งอ้างอิง</td>
+          <td>${labelSource}</td>
           <td>${tx.source}</td>
         </tr>
         <tr>
-          <td>คะแนนสะสม</td>
+          <td>${labelPoints}</td>
           <td class="${pointsClass}">${sign}${tx.points} Points</td>
         </tr>
         <tr>
-          <td>สถานะรายการ</td>
+          <td>${labelStatus}</td>
           <td>
             <span class="tx-badge-status ${tx.points >= 0 ? 'tx-badge-received' : 'tx-badge-used'}">
-              <i class="fa-solid fa-circle-check"></i> ${tx.status}
+              <i class="fa-solid fa-circle-check"></i> ${statusVal}
             </span>
           </td>
         </tr>
-        <tr>
-          <td>Blockchain Hash</td>
-          <td>
-            <div class="detail-blockchain-hash">${tx.hash.substring(0, 10)}...${tx.hash.substring(tx.hash.length - 8)}</div>
-          </td>
-        </tr>
       </table>
-      
-      <div class="detail-panel-actions">
-        <button class="btn btn-primary" id="btn-open-blockchain-explorer">
-          <i class="fa-solid fa-cube"></i> ดูบน Explorer
-        </button>
-      </div>
     </div>
   `;
-  
-  // Add listener for blockchain explorer
-  document.getElementById("btn-open-blockchain-explorer").addEventListener("click", () => {
-    openBlockchainExplorerModal(tx);
-  });
 }
 
 function resetTransactionDetailPanel() {
   const panel = document.getElementById("transaction-detail-panel");
+  const title = appLanguage === "th" ? "รายละเอียดรายการ" : "Transaction Details";
+  const desc = appLanguage === "th" 
+    ? "กรุณาเลือกรายการประวัติที่คุณต้องการตรวจสอบเพื่อดูรายละเอียดเพิ่มเติม" 
+    : "Please select a transaction to check details.";
+    
   panel.innerHTML = `
     <div class="detail-empty-state">
       <i class="fa-solid fa-receipt"></i>
-      <h3>รายละเอียดรายการ</h3>
-      <p>กรุณาเลือกรายการประวัติที่คุณต้องการตรวจสอบเพื่อดูรายละเอียดเพิ่มเติม</p>
+      <h3>${title}</h3>
+      <p>${desc}</p>
     </div>
   `;
   selectedTxId = null;
@@ -807,60 +876,58 @@ function initTransactionsFilters() {
 }
 
 // ==========================================
-// BLOCKCHAIN EXPLORER MODAL
-// ==========================================
-function openBlockchainExplorerModal(tx) {
-  document.getElementById("exp-tx-hash").innerText = tx.hash;
-  document.getElementById("exp-timestamp").innerText = `${tx.date} ${tx.time}`;
-  document.getElementById("exp-action").innerText = tx.points < 0 ? "Redeem Reward" : "Earn Points via Eco Action";
-  document.getElementById("exp-points-value").innerText = `${tx.points >= 0 ? '+' : ''}${tx.points} Points`;
-  document.getElementById("exp-points-value").className = tx.points < 0 ? "points-val" : "points-val points-green";
-  
-  document.getElementById("blockchain-explorer-modal").classList.add("active");
-}
-
-function closeBlockchainExplorerModal() {
-  document.getElementById("blockchain-explorer-modal").classList.remove("active");
-}
-
-// ==========================================
 // VIEW: PROFILE & SETTINGS
 // ==========================================
 function populateProfileFields() {
   document.getElementById("input-firstname").value = userState.firstName;
   document.getElementById("input-lastname").value = userState.lastName;
-  document.getElementById("input-email").value = userState.email;
+  document.getElementById("input-student-id").value = userState.studentId;
   document.getElementById("input-phone").value = userState.phone;
-  document.getElementById("input-wallet-address").value = userState.walletAddress;
+  document.getElementById("input-email").value = userState.email;
+  document.getElementById("input-faculty").value = userState.faculty;
+  document.getElementById("input-major").value = userState.major;
   
   // Profile View stats
   document.getElementById("profile-user-name").innerText = `${userState.firstName} ${userState.lastName}`;
-  document.getElementById("profile-user-code").innerText = userState.code;
+  document.getElementById("profile-user-code").innerText = userState.studentId;
   document.getElementById("profile-points-display").innerText = Number(userState.points).toLocaleString();
-  document.getElementById("profile-leaderboard-points").innerText = `${Number(userState.points).toLocaleString()} แต้ม`;
+  document.getElementById("profile-faculty-display").innerText = userState.faculty;
+  document.getElementById("profile-major-display").innerText = userState.major;
 }
 
 function saveProfileDetails() {
   const firstNameInput = document.getElementById("input-firstname").value.trim();
   const lastNameInput = document.getElementById("input-lastname").value.trim();
-  const emailInput = document.getElementById("input-email").value.trim();
+  const studentIdInput = document.getElementById("input-student-id").value.trim();
   const phoneInput = document.getElementById("input-phone").value.trim();
+  const emailInput = document.getElementById("input-email").value.trim();
+  const facultyInput = document.getElementById("input-faculty").value.trim();
+  const majorInput = document.getElementById("input-major").value.trim();
   
-  if (!firstNameInput || !lastNameInput) {
-    showToast("กรุณากรอกชื่อและนามสกุลของคุณ", "error");
+  if (!firstNameInput || !lastNameInput || !studentIdInput) {
+    const errorMsg = appLanguage === "th" 
+      ? "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน (ชื่อจริง, นามสกุล, รหัสนักศึกษา)" 
+      : "Please fill in all required fields (First Name, Last Name, Student ID).";
+    showToast(errorMsg, "error");
     return;
   }
   
   userState.firstName = firstNameInput;
   userState.lastName = lastNameInput;
-  userState.email = emailInput;
+  userState.studentId = studentIdInput;
   userState.phone = phoneInput;
+  userState.email = emailInput;
+  userState.faculty = facultyInput;
+  userState.major = majorInput;
   
   saveToLocalStorage();
   syncUI();
   populateProfileFields();
   
-  showToast("บันทึกข้อมูลข้อมูลส่วนตัวสำเร็จ!", "success");
+  const successMsg = appLanguage === "th" 
+    ? "บันทึกข้อมูลส่วนตัวเรียบร้อยแล้ว!" 
+    : "Profile details updated successfully!";
+  showToast(successMsg, "success");
 }
 
 // Change Avatar image seed randomly to add an interactive feel
@@ -870,11 +937,13 @@ function changeAvatarSeed() {
   
   document.getElementById("profile-avatar-img").src = newAvatarUrl;
   document.getElementById("sidebar-avatar-img").src = newAvatarUrl;
-  document.getElementById("leaderboard-avatar-img").src = newAvatarUrl;
   const headerAvatar = document.getElementById("header-avatar-img");
   if (headerAvatar) headerAvatar.src = newAvatarUrl;
   
-  showToast("เปลี่ยนรูปโปรไฟล์เรียบร้อย!", "success");
+  const avatarMsg = appLanguage === "th" 
+    ? "เปลี่ยนรูปโปรไฟล์เรียบร้อย!" 
+    : "Profile image changed successfully!";
+  showToast(avatarMsg, "success");
 }
 
 // ==========================================
@@ -919,16 +988,19 @@ function initThemeToggle() {
     localStorage.setItem("cw_theme", newTheme);
     updateThemeIcon(newTheme);
     
-    showToast(`สลับใช้งานโหมด ${newTheme === "dark" ? 'กลางคืน' : 'กลางวัน'}`, "success");
+    const msg = appLanguage === "th" 
+      ? `สลับใช้งานโหมด ${newTheme === "dark" ? 'กลางคืน' : 'กลางวัน'}` 
+      : `Switched to ${newTheme === "dark" ? 'dark' : 'light'} mode`;
+    showToast(msg, "success");
   });
 }
 
 function updateThemeIcon(theme) {
   const icon = document.querySelector("#theme-toggle-btn i");
   if (theme === "dark") {
-    icon.className = "fa-regular fa-sun";
+    icon.className = "fa-solid fa-sun";
   } else {
-    icon.className = "fa-regular fa-moon";
+    icon.className = "fa-solid fa-moon";
   }
 }
 
@@ -941,8 +1013,10 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // 2. Initialize subsystems
   initRouting();
+  translateApp();
   syncUI();
   initThemeToggle();
+  initLangToggle();
   initRewardsFilters();
   initTransactionsFilters();
   initHamburgerMenu();
@@ -963,16 +1037,11 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Success Modal closing
   document.getElementById("btn-back-to-shop").addEventListener("click", closeSuccessModal);
-  document.getElementById("btn-copy-coupon-code").addEventListener("click", copyCouponCode);
   document.getElementById("btn-view-transaction-history").addEventListener("click", () => {
     closeSuccessModal();
     // Redirect to Transactions View
     document.getElementById("nav-transactions").click();
   });
-  
-  // Explorer Modal closing
-  document.getElementById("close-explorer-modal-btn").addEventListener("click", closeBlockchainExplorerModal);
-  document.getElementById("btn-close-explorer").addEventListener("click", closeBlockchainExplorerModal);
   
   // Save profile trigger
   document.getElementById("btn-save-profile").addEventListener("click", saveProfileDetails);
@@ -990,7 +1059,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Limit file size to 1MB
     const maxSizeBytes = 1024 * 1024;
     if (file.size > maxSizeBytes) {
-      showToast("ขนาดภาพต้องไม่เกิน 1MB เพื่อประสิทธิภาพระบบ", "error");
+      const sizeMsg = appLanguage === "th" 
+        ? "ขนาดภาพต้องไม่เกิน 1MB เพื่อประสิทธิภาพระบบ" 
+        : "Image size must not exceed 1MB.";
+      showToast(sizeMsg, "error");
       e.target.value = ""; // Reset
       return;
     }
@@ -1006,10 +1078,11 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("sidebar-avatar-img").src = dataUrl;
       const headerAvatar = document.getElementById("header-avatar-img");
       if (headerAvatar) headerAvatar.src = dataUrl;
-      const lbAvatar = document.getElementById("leaderboard-avatar-img");
-      if (lbAvatar) lbAvatar.src = dataUrl;
       
-      showToast("อัปโหลดรูปโปรไฟล์เรียบร้อย!", "success");
+      const uploadMsg = appLanguage === "th" 
+        ? "อัปโหลดรูปโปรไฟล์เรียบร้อย!" 
+        : "Profile image uploaded successfully!";
+      showToast(uploadMsg, "success");
     };
     reader.readAsDataURL(file);
   });
@@ -1064,10 +1137,11 @@ function renderNotifications() {
   }
   
   if (notificationsState.length === 0) {
+    const emptyMsg = appLanguage === "th" ? "ไม่มีการแจ้งเตือนในขณะนี้" : "No notifications at this time.";
     list.innerHTML = `
       <div class="dropdown-empty">
         <i class="fa-solid fa-bell-slash"></i>
-        <p>ไม่มีการแจ้งเตือนในขณะนี้</p>
+        <p>${emptyMsg}</p>
       </div>
     `;
     return;
@@ -1077,13 +1151,29 @@ function renderNotifications() {
     const el = document.createElement("div");
     el.className = `notification-item ${item.unread ? 'unread' : ''}`;
     
+    let textVal = item.text;
+    let timeVal = item.time;
+    if (appLanguage === "en") {
+      if (item.text.includes("ระดับ 3")) textVal = "Congratulations! You reached Level 3 status.";
+      else if (item.text.includes("ได้รับ 120 แต้ม")) textVal = "Earned 120 points from Helmet safety check-in.";
+      else if (item.text.includes("การแลกของรางวัล Grab Coupon สำเร็จ")) textVal = "Grab Coupon redemption completed successfully.";
+      else if (item.text.includes("แลกของรางวัล") && item.text.includes("สำเร็จแล้ว!")) {
+        textVal = item.text.replace("แลกของรางวัล ", "Redeemed ").replace(" สำเร็จแล้ว!", " successfully!");
+      }
+      
+      if (item.time.includes("นาทีที่แล้ว")) timeVal = item.time.replace("นาทีที่แล้ว", " mins ago");
+      else if (item.time.includes("ชั่วโมงที่แล้ว")) timeVal = item.time.replace("ชั่วโมงที่แล้ว", " hours ago");
+      else if (item.time.includes("วันที่แล้ว")) timeVal = item.time.replace("วันที่แล้ว", " days ago");
+      else if (item.time.includes("เมื่อสักครู่")) timeVal = "Just now";
+    }
+    
     el.innerHTML = `
       <div class="notification-icon-wrapper">
         <i class="fa-solid ${item.icon || 'fa-bell'}"></i>
       </div>
       <div class="notification-content">
-        <p>${item.text}</p>
-        <span class="notification-time">${item.time}</span>
+        <p>${textVal}</p>
+        <span class="notification-time">${timeVal}</span>
       </div>
     `;
     
@@ -1125,39 +1215,312 @@ function initHamburgerMenu() {
   }
 }
 
-function generateBarcodeSVG(text) {
-  const CODE39_MAP = {
-    '0': '101001101101', '1': '110100101011', '2': '101100101011', '3': '110110010101',
-    '4': '101001101011', '5': '110100110101', '6': '101100110101', '7': '101001011011',
-    '8': '110100101101', '9': '101100101101', 'A': '110101001011', 'B': '101101001011',
-    'C': '110110100101', 'D': '101011001011', 'E': '110101100101', 'F': '101101100101',
-    'G': '101010011011', 'H': '110101001101', 'I': '101101001101', 'J': '101011001101',
-    'K': '110101010011', 'L': '101101010011', 'M': '110110101001', 'N': '101011010011',
-    'O': '110101101001', 'P': '101101101001', 'Q': '101010110011', 'R': '110101011001',
-    'S': '101101011001', 'T': '101011011001', 'U': '110010101011', 'V': '100110101011',
-    'W': '110011010101', 'X': '100101101011', 'Y': '110010110101', 'Z': '100110110101',
-    '-': '100101011011', '.': '110010101101', ' ': '100110101101', '*': '100101101101',
-    '$': '100100100101', '/': '100100101001', '+': '100101001001', '%': '101001001001'
-  };
+// ==========================================
+// TRANSLATION ENGINE (TH/EN)
+// ==========================================
+let appLanguage = localStorage.getItem("appLanguage") || "th";
 
-  const sanitized = text.toUpperCase().split('').map(char => CODE39_MAP[char] ? char : '-').join('');
-  const formattedText = `*${sanitized}*`;
-  
-  let binString = "";
-  for (let char of formattedText) {
-    binString += CODE39_MAP[char] + "0";
+const TRANSLATIONS = {
+  th: {
+    // Navigation
+    "nav-dashboard": "หน้าหลัก",
+    "nav-rewards": "แลกของรางวัล",
+    "nav-transactions": "ประวัติรายการ",
+    "nav-profile": "โปรไฟล์นักศึกษา",
+    
+    // Header
+    "points-unit": "Points",
+    "clear-all": "อ่านทั้งหมด",
+    "notifications-title": "การแจ้งเตือน",
+    
+    // Dashboard Welcome
+    "welcome-title": "สวัสดี, ",
+    "welcome-subtitle": "วันนี้คุณช่วยลดคาร์บอนไปแล้ว <b>2.4 kg CO₂e</b> มาร่วมสร้างสิ่งแวดล้อมที่ดีไปด้วยกันนะ!",
+    "hero-level": "ระดับ: Carbon Hero",
+    "planted-trees": "ปลูกต้นไม้สะสม 12 ต้น",
+    
+    // Dashboard Stats
+    "stat-points-title": "คะแนนสะสมทั้งหมด",
+    "stat-points-desc": "ใช้สำหรับแลกของรางวัลและคูปองส่วนลดพิเศษ",
+    "btn-quick-redeem": "แลกของรางวัล",
+    "stat-carbon-title": "คาร์บอนที่ลดได้สะสม",
+    "stat-carbon-desc": "เทียบเท่ากับการปลูกต้นไม้ <b>16.5</b> ต้นในปีนี้",
+    
+    // Dashboard Actions
+    "action-title": "บันทึกกิจกรรมรักษ์โลก",
+    "action-desc": "เลือกกิจกรรมที่คุณทำในวันนี้เพื่อบันทึกคะแนนสะสม",
+    "action-walk-title": "เดินหรือปั่นจักรยานแทนการใช้รถ",
+    "action-walk-desc": "ลดคาร์บอน 1.2 kg · รับ +15 คะแนน",
+    "action-tumbler-title": "พกแก้วน้ำหรือกล่องข้าวส่วนตัว",
+    "action-tumbler-desc": "ลดคาร์บอน 0.5 kg · รับ +10 คะแนน",
+    "action-recycle-title": "แยกขยะก่อนทิ้ง",
+    "action-recycle-desc": "ลดคาร์บอน 0.8 kg · รับ +12 คะแนน",
+    "action-stairs-title": "ใช้บันไดแทนการขึ้นลิฟต์",
+    "action-stairs-desc": "ลดคาร์บอน 0.2 kg · รับ +5 คะแนน",
+    "btn-record": "บันทึกกิจกรรม",
+    
+    // Rewards View
+    "rewards-header": "หมวดหมู่ของรางวัล",
+    "rewards-search-placeholder": "ค้นหาของรางวัล...",
+    "rewards-sort-label": "จัดเรียง:",
+    "sort-popular": "ยอดนิยม",
+    "sort-low-high": "คะแนนน้อยสุด",
+    "sort-high-low": "คะแนนมากสุด",
+    "cat-all": "ทั้งหมด",
+    "cat-lifestyle": "สินค้าทั่วไป",
+    "cat-food": "อาหาร & เครื่องดื่ม",
+    "cat-gadget": "ของพรีเมียม",
+    "cat-discount": "คูปองส่วนลด",
+    "points-label": " คะแนน",
+    "btn-redeem": "แลกของรางวัล",
+    
+    // Transactions View
+    "tx-header": "ประวัติการสะสมและการแลกของรางวัล",
+    "tx-filter-label": "ตัวกรอง:",
+    "tx-filter-all": "ทั้งหมด",
+    "tx-filter-received": "ได้รับคะแนน",
+    "tx-filter-used": "แลกของรางวัล",
+    "tx-details-header": "รายละเอียดรายการ",
+    "tx-empty-state": "กรุณาเลือกรายการด้านซ้ายเพื่อดูรายละเอียดเพิ่มเติม",
+    "tx-id": "เลขที่รายการ",
+    "tx-date": "วันที่ทำรายการ",
+    "tx-time": "เวลา",
+    "tx-activity-type": "ประเภทรายการ",
+    "tx-source": "แหล่งที่มา",
+    "tx-points": "คะแนน",
+    "tx-status": "สถานะ",
+    
+    // Profile View
+    "profile-title": "ข้อมูลโปรไฟล์นักศึกษา",
+    "profile-firstname": "ชื่อ",
+    "profile-lastname": "นามสกุล",
+    "profile-student-id": "รหัสนักศึกษา",
+    "profile-phone": "เบอร์โทรศัพท์",
+    "profile-email": "อีเมล",
+    "profile-faculty": "คณะ",
+    "profile-major": "สาขาวิชา",
+    "btn-save-profile": "บันทึกข้อมูล",
+    
+    // Modals
+    "modal-confirm-title": "ยืนยันการแลกของรางวัล",
+    "confirm-msg-prefix": "คุณแน่ใจใช่หรือไม่ว่าต้องการใช้ ",
+    "confirm-msg-suffix": " คะแนน เพื่อแลกรับของรางวัลชิ้นนี้?",
+    "confirm-summary-title": "สรุปรายการแลก",
+    "confirm-current-points": "คะแนนคงเหลือปัจจุบัน",
+    "confirm-points-deduct": "คะแนนที่ใช้แลก",
+    "confirm-points-remaining": "คะแนนคงเหลือหลังแลก",
+    "btn-cancel": "ยกเลิก",
+    "btn-confirm": "ยืนยัน",
+    
+    "modal-success-title": "แลกของรางวัลสำเร็จ!",
+    "success-msg-prefix": "คุณได้ทำการแลกรับ ",
+    "success-msg-suffix": " เรียบร้อยแล้ว",
+    "success-spent": "คะแนนที่ใช้",
+    "success-remaining": "คะแนนคงเหลือ",
+    "btn-view-history": "ดูประวัติการแลก",
+    "btn-close-modal": "ปิดหน้าต่าง",
+    "goal-progress": "เป้าหมายการลดคาร์บอนประจำเดือนนี้",
+    "user-level": "ระดับผู้ใช้งาน",
+    "next-level": "อีก 150 คะแนนเพื่อเลื่อนระดับถัดไป",
+    "latest-activities": "กิจกรรมรักษ์โลกล่าสุดของคุณ",
+    "view-all": "ดูทั้งหมด",
+    "achievements": "ความสำเร็จ",
+    "ach-1-title": "สายกรีนสม่ำเสมอ",
+    "ach-2-title": "อร่อยรักษ์โลก",
+    "ach-3-title": "ผู้พิทักษ์คาร์บอน",
+    "ach-4-title": "นักสะสมของพรีเมียม",
+    "act-1-title": "นั่งรถเมล์ไฟฟ้า (EV)",
+    "act-1-desc": "ลดคาร์บอนได้ 3.2 kg",
+    "act-1-points": "+20 Carbon Credit",
+    "act-2-title": "สวมหมวกกันน็อกขับขี่ปลอดภัย",
+    "act-2-desc": "ระบบยืนยันความปลอดภัย",
+    "act-3-title": "เดินสะสมครบ 10,000 ก้าว",
+    "act-3-desc": "ลดคาร์บอนได้ 1.5 kg"
+  },
+  en: {
+    // Navigation
+    "nav-dashboard": "Dashboard",
+    "nav-rewards": "Rewards",
+    "nav-transactions": "Transactions",
+    "nav-profile": "Student Profile",
+    
+    // Header
+    "points-unit": "Points",
+    "clear-all": "Mark all read",
+    "notifications-title": "Notifications",
+    
+    // Dashboard Welcome
+    "welcome-title": "Welcome back, ",
+    "welcome-subtitle": "Today you saved <b>2.4 kg CO₂e</b> of emissions. Let's make a difference together!",
+    "hero-level": "Level: Carbon Hero",
+    "planted-trees": "12 trees planted",
+    
+    // Dashboard Stats
+    "stat-points-title": "Total Points Balance",
+    "stat-points-desc": "Redeem these points instantly for eco-rewards and store discounts.",
+    "btn-quick-redeem": "Redeem Rewards",
+    "stat-carbon-title": "Carbon Saved",
+    "stat-carbon-desc": "Equivalent to planting <b>16.5</b> trees this year.",
+    
+    // Dashboard Actions
+    "action-title": "Today's Eco Actions",
+    "action-desc": "Record your daily eco-friendly activities to earn points.",
+    "action-walk-title": "Walk or Cycle instead of Driving",
+    "action-walk-desc": "Saved 1.2 kg CO₂e · Earned +15 Points",
+    "action-tumbler-title": "Bring Personal Tumbler/Lunchbox",
+    "action-tumbler-desc": "Saved 0.5 kg CO₂e · Earned +10 Points",
+    "action-recycle-title": "Sort Waste & Recycle",
+    "action-recycle-desc": "Saved 0.8 kg CO₂e · Earned +12 Points",
+    "action-stairs-title": "Take the Stairs instead of Lift",
+    "action-stairs-desc": "Saved 0.2 kg CO₂e · Earned +5 Points",
+    "btn-record": "Record Action",
+    
+    // Rewards View
+    "rewards-header": "Reward Categories",
+    "rewards-search-placeholder": "Search rewards...",
+    "rewards-sort-label": "Sort by:",
+    "sort-popular": "Popularity",
+    "sort-low-high": "Points: Low to High",
+    "sort-high-low": "Points: High to Low",
+    "cat-all": "All",
+    "cat-lifestyle": "Lifestyle",
+    "cat-food": "Food & Drinks",
+    "cat-gadget": "Eco Gadgets",
+    "cat-discount": "Discounts",
+    "points-label": " Points",
+    "btn-redeem": "Redeem",
+    
+    // Transactions View
+    "tx-header": "Redemption & Point History",
+    "tx-filter-label": "Filter:",
+    "tx-filter-all": "All",
+    "tx-filter-received": "Earned Points",
+    "tx-filter-used": "Redeemed Rewards",
+    "tx-details-header": "Transaction Details",
+    "tx-empty-state": "Please select a transaction to check details.",
+    "tx-id": "Transaction ID",
+    "tx-date": "Date",
+    "tx-time": "Time",
+    "tx-activity-type": "Activity Type",
+    "tx-source": "Source",
+    "tx-points": "Points Balance",
+    "tx-status": "Status",
+    
+    // Profile View
+    "profile-title": "Student Profile Information",
+    "profile-firstname": "First Name",
+    "profile-lastname": "Last Name",
+    "profile-student-id": "Student ID",
+    "profile-phone": "Phone Number",
+    "profile-email": "Email Address",
+    "profile-faculty": "Faculty",
+    "profile-major": "Major",
+    "btn-save-profile": "Save Profile Details",
+    
+    // Modals
+    "modal-confirm-title": "Confirm Redemption",
+    "confirm-msg-prefix": "Do you want to use ",
+    "confirm-msg-suffix": " Points to redeem this reward?",
+    "confirm-summary-title": "Order Summary",
+    "confirm-current-points": "Current Points",
+    "confirm-points-deduct": "Points to Deduct",
+    "confirm-points-remaining": "Points Remaining",
+    "btn-cancel": "Cancel",
+    "btn-confirm": "Confirm",
+    
+    "modal-success-title": "Redemption Successful!",
+    "success-msg-prefix": "You have redeemed ",
+    "success-msg-suffix": " successfully.",
+    "success-spent": "Points Used",
+    "success-remaining": "Points Remaining",
+    "btn-view-history": "View Transactions",
+    "btn-close-modal": "Close",
+    "goal-progress": "Monthly Goal Progress",
+    "user-level": "User Level Status",
+    "next-level": "Only <b>150 XP</b> remaining to reach Level 4 Elite",
+    "latest-activities": "Your Recent Carbon Activities",
+    "view-all": "View All",
+    "achievements": "Eco Achievements",
+    "ach-1-title": "Green Habit",
+    "ach-2-title": "Eco Foodie",
+    "ach-3-title": "Carbon Hero",
+    "ach-4-title": "Elite Collector",
+    "act-1-title": "Traveled by EV Public Bus",
+    "act-1-desc": "Saved 3.2 kg CO₂e emissions",
+    "act-1-points": "+20 Carbon Credits",
+    "act-2-title": "Safe Ride with Helmet (Helmet App)",
+    "act-2-desc": "Journey recorded by AI safety system",
+    "act-3-title": "Walked 10,000 steps (PromptGo)",
+    "act-3-desc": "Saved 1.5 kg CO₂e emissions"
   }
-  
-  const barWidth = 2.2;
-  const height = 75;
-  const totalWidth = binString.length * barWidth;
-  
-  let svgContent = `<svg width="100%" height="${height}" viewBox="0 0 ${totalWidth} ${height}" preserveAspectRatio="none" style="display: block; margin: 0 auto;">`;
-  for (let i = 0; i < binString.length; i++) {
-    if (binString[i] === '1') {
-      svgContent += `<rect x="${i * barWidth}" y="0" width="${barWidth}" height="${height}" />`;
+};
+
+function translateApp() {
+  const elements = document.querySelectorAll("[data-i18n]");
+  elements.forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const translation = TRANSLATIONS[appLanguage][key];
+    if (translation) {
+      if (el.tagName === "INPUT" && el.hasAttribute("placeholder")) {
+        el.setAttribute("placeholder", translation);
+      } else {
+        // If the translation contains HTML elements (like <i> or <b> tags), use innerHTML directly.
+        if (translation.includes("<") && translation.includes(">")) {
+          el.innerHTML = translation;
+        } else {
+          // Retain fontawesome icons inside elements when translating
+          const icon = el.querySelector("i");
+          if (icon) {
+            const iconClone = icon.cloneNode(true);
+            el.innerText = " " + translation;
+            el.insertBefore(iconClone, el.firstChild);
+          } else {
+            el.innerText = translation;
+          }
+        }
+      }
     }
+  });
+
+  // Update header title based on active view
+  const activeLink = document.querySelector(".nav-link.active");
+  if (activeLink) {
+    const targetViewId = activeLink.getAttribute("data-target");
+    let pageTitleText = appLanguage === "th" ? "หน้าหลัก" : "Dashboard";
+    if (targetViewId === "rewards-view") pageTitleText = appLanguage === "th" ? "แลกของรางวัล" : "Rewards";
+    if (targetViewId === "transactions-view") pageTitleText = appLanguage === "th" ? "ประวัติรายการ" : "Transactions";
+    if (targetViewId === "profile-view") pageTitleText = appLanguage === "th" ? "โปรไฟล์นักศึกษา" : "Student Profile";
+    document.getElementById("page-title-display").innerText = pageTitleText;
   }
-  svgContent += `</svg>`;
-  return svgContent;
+
+  // Update student ID profile prefix
+  const codeBadge = document.getElementById("profile-code-badge-label");
+  if (codeBadge) {
+    const label = appLanguage === "th" ? "รหัสนักศึกษา: " : "Student ID: ";
+    codeBadge.innerHTML = `${label}<span id="profile-user-code">${userState.studentId}</span>`;
+  }
+  
+  // Update lang button text
+  const langToggleBtn = document.getElementById("lang-toggle-btn");
+  if (langToggleBtn) {
+    langToggleBtn.innerText = appLanguage === "th" ? "EN" : "TH";
+  }
+}
+
+function initLangToggle() {
+  const btn = document.getElementById("lang-toggle-btn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      appLanguage = appLanguage === "th" ? "en" : "th";
+      localStorage.setItem("appLanguage", appLanguage);
+      
+      // Update page contents
+      translateApp();
+      syncUI();
+      
+      // Notify user
+      const msg = appLanguage === "th" ? "เปลี่ยนภาษาเป็นภาษาไทยแล้ว" : "Language switched to English";
+      showToast(msg, "success");
+    });
+  }
 }

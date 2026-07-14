@@ -41,25 +41,25 @@
           <li>
             <a href="#" class="nav-link active" data-target="dashboard-view" id="sidebar-nav-dashboard">
               <i class="fa-solid fa-chart-pie"></i>
-              <span>หน้าหลัก (Dashboard)</span>
+              <span data-i18n="nav-dashboard">หน้าหลัก</span>
             </a>
           </li>
           <li>
             <a href="#" class="nav-link" data-target="rewards-view" id="sidebar-nav-rewards">
               <i class="fa-solid fa-gift"></i>
-              <span>แลกของรางวัล (Rewards)</span>
+              <span data-i18n="nav-rewards">แลกของรางวัล</span>
             </a>
           </li>
           <li>
             <a href="#" class="nav-link" data-target="transactions-view" id="sidebar-nav-transactions">
               <i class="fa-solid fa-receipt"></i>
-              <span>ประวัติรายการ (Transactions)</span>
+              <span data-i18n="nav-transactions">ประวัติรายการ</span>
             </a>
           </li>
           <li>
             <a href="#" class="nav-link" data-target="profile-view" id="sidebar-nav-profile">
               <i class="fa-solid fa-user-gear"></i>
-              <span>โปรไฟล์ผู้ใช้ (Profile)</span>
+              <span data-i18n="nav-profile">โปรไฟล์นักศึกษา</span>
             </a>
           </li>
         </ul>
@@ -70,8 +70,8 @@
         <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="User Avatar" class="sidebar-avatar"
           id="sidebar-avatar-img">
         <div class="sidebar-profile-details">
-          <div class="sidebar-profile-name" id="user-name-sidebar">สมชาย รักดี</div>
-          <div class="sidebar-profile-code" id="user-code-sidebar">CW-88492</div>
+          <div class="sidebar-profile-name" id="user-name-sidebar">Somchai Rakdee</div>
+          <div class="sidebar-profile-code" id="user-code-sidebar">651234567</div>
         </div>
       </div>
     </aside>
@@ -91,19 +91,19 @@
             <div class="nav-dropdown-menu" id="nav-dropdown-menu">
               <a href="#" class="nav-link active" data-target="dashboard-view" id="nav-dashboard">
                 <i class="fa-solid fa-chart-pie"></i>
-                <span>หน้าหลัก (Dashboard)</span>
+                <span data-i18n="nav-dashboard">หน้าหลัก</span>
               </a>
               <a href="#" class="nav-link" data-target="rewards-view" id="nav-rewards">
                 <i class="fa-solid fa-gift"></i>
-                <span>แลกของรางวัล (Rewards)</span>
+                <span data-i18n="nav-rewards">แลกของรางวัล</span>
               </a>
               <a href="#" class="nav-link" data-target="transactions-view" id="nav-transactions">
                 <i class="fa-solid fa-receipt"></i>
-                <span>ประวัติรายการ (Transactions)</span>
+                <span data-i18n="nav-transactions">ประวัติรายการ</span>
               </a>
               <a href="#" class="nav-link" data-target="profile-view" id="nav-profile">
                 <i class="fa-solid fa-user-gear"></i>
-                <span>โปรไฟล์ผู้ใช้ (Profile)</span>
+                <span data-i18n="nav-profile">โปรไฟล์นักศึกษา</span>
               </a>
             </div>
           </div>
@@ -118,7 +118,7 @@
 
           <div class="header-divider"></div>
 
-          <h1 class="page-title" id="page-title-display">หน้าหลัก (Dashboard)</h1>
+          <h1 class="page-title" id="page-title-display">หน้าหลัก</h1>
         </div>
 
         <div class="header-right">
@@ -138,7 +138,7 @@
             onclick="document.getElementById('nav-profile').click();">
             <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="User Avatar" class="header-avatar"
               id="header-avatar-img">
-            <span class="header-username" id="header-username-display">สมชาย รักดี</span>
+            <span class="header-username" id="header-username-display">Somchai Rakdee</span>
           </div>
 
           <div class="notification-bell" id="notification-bell-btn">
@@ -157,8 +157,9 @@
             </div>
           </div>
 
+          <div class="lang-toggle" id="lang-toggle-btn" style="margin-right: 12px;">EN</div>
           <div class="theme-toggle" id="theme-toggle-btn">
-            <i class="fa-regular fa-moon"></i>
+            <i class="fa-solid fa-moon"></i>
           </div>
         </div>
       </header>
@@ -169,11 +170,10 @@
         <!-- Welcome banner with visual animation elements -->
         <div class="welcome-banner">
           <div class="welcome-text-wrapper">
-            <h2>ยินดีต้อนรับกลับมา, <span id="user-display-name">คุณสมชาย รักดี</span>! 👋</h2>
-            <p>วันนี้คุณช่วยลดการปล่อยคาร์บอนไปแล้ว <b>2.4 kg CO₂e</b> มาร่วมสร้างโลกที่ยั่งยืนไปด้วยกัน!</p>
+            <h2>สวัสดี, <span id="user-display-name">คุณสมชาย รักดี</span>! 👋</h2>
+            <p data-i18n="welcome-subtitle">วันนี้คุณช่วยลดคาร์บอนไปแล้ว <b>2.4 kg CO₂e</b> มาร่วมสร้างสิ่งแวดล้อมที่ดีไปด้วยกันนะ!</p>
             <div class="banner-badges">
-              <span class="badge"><i class="fa-solid fa-award"></i> ระดับ: Carbon Hero</span>
-              <span class="badge badge-green"><i class="fa-solid fa-tree"></i> ปลูกต้นไม้แล้ว 12 ต้น</span>
+              <span class="badge badge-green" data-i18n="planted-trees"><i class="fa-solid fa-tree"></i> ปลูกต้นไม้สะสม 12 ต้น</span>
             </div>
           </div>
           <div class="welcome-visual">
@@ -194,12 +194,12 @@
               <i class="fa-solid fa-coins"></i>
             </div>
             <div class="stat-info">
-              <h3>คะแนนสะสมทั้งหมด</h3>
+              <h3 data-i18n="stat-points-title">คะแนนสะสมทั้งหมด</h3>
               <div class="stat-value" id="dashboard-points-value">1,250</div>
-              <p class="stat-desc">สามารถนำไปแลกของรางวัลหรือคูปองส่วนลดได้ทันที</p>
+              <p class="stat-desc" data-i18n="stat-points-desc">สามารถนำไปแลกของรางวัลหรือคูปองส่วนลดได้ทันที</p>
             </div>
             <div class="stat-footer">
-              <button class="btn btn-primary btn-sm" id="btn-quick-redeem">
+              <button class="btn btn-primary btn-sm" id="btn-quick-redeem" data-i18n="btn-quick-redeem">
                 <i class="fa-solid fa-gift"></i> แลกของรางวัลเลย
               </button>
             </div>
@@ -211,14 +211,14 @@
               <i class="fa-solid fa-cloud-arrow-down"></i>
             </div>
             <div class="stat-info">
-              <h3>คาร์บอนที่ลดได้สะสม</h3>
+              <h3 data-i18n="stat-carbon-title">คาร์บอนที่ลดได้สะสม</h3>
               <div class="stat-value">148.5 <span class="unit">kg CO₂e</span></div>
-              <p class="stat-desc">เทียบเท่าการปลูกต้นไม้ <b>16.5</b> ต้นในปีนี้</p>
+              <p class="stat-desc" data-i18n="stat-carbon-desc">เทียบเท่าการปลูกต้นไม้ <b>16.5</b> ต้นในปีนี้</p>
             </div>
             <!-- Interactive progress bar -->
             <div class="progress-container">
               <div class="progress-label">
-                <span>ความคืบหน้าเป้าหมายเดือนนี้</span>
+                <span data-i18n="goal-progress">ความคืบหน้าเป้าหมายเดือนนี้</span>
                 <span>74%</span>
               </div>
               <div class="progress-bar-outer">
@@ -227,36 +227,16 @@
             </div>
           </div>
 
-          <!-- User Details / Level Card -->
-          <div class="stat-card card-level">
-            <div class="stat-icon-wrapper">
-              <i class="fa-solid fa-bolt"></i>
-            </div>
-            <div class="stat-info">
-              <h3>ระดับผู้ใช้งาน</h3>
-              <div class="stat-value" style="font-size: 1.8rem; margin-bottom: 0.25rem;">Level 3 Warrior</div>
-              <p class="stat-desc">อีก <b>150 XP</b> เพื่อเลื่อนไประดับ Level 4 Elite</p>
-            </div>
-            <div class="progress-container" style="margin-top: 1rem;">
-              <div class="progress-label">
-                <span>850 / 1000 XP</span>
-                <span>85%</span>
-              </div>
-              <div class="progress-bar-outer">
-                <div class="progress-bar-inner" style="width: 85%; background: var(--accent-color);"></div>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <!-- Secondary section grid: Achievements & Quick Actions -->
+        <!-- Secondary section grid: Quick Actions -->
         <div class="dashboard-details-grid">
 
           <!-- Green Activities List -->
           <div class="details-card">
             <div class="details-card-header">
-              <h3><i class="fa-solid fa-leaf green-icon"></i> กิจกรรมลดคาร์บอนล่าสุดของคุณ</h3>
-              <button class="btn-text" id="btn-view-all-activities">ดูทั้งหมด</button>
+              <h3 data-i18n="latest-activities"><i class="fa-solid fa-leaf green-icon"></i> กิจกรรมลดคาร์บอนล่าสุดของคุณ</h3>
+              <button class="btn-text" id="btn-view-all-activities" data-i18n="view-all">ดูทั้งหมด</button>
             </div>
             <div class="activities-list">
               <div class="activity-item">
@@ -264,10 +244,10 @@
                   <i class="fa-solid fa-bus"></i>
                 </div>
                 <div class="activity-details">
-                  <h4>เดินทางด้วยรถโดยสารสาธารณะ EV</h4>
-                  <p>ลดคาร์บอน 3.2 kg CO₂e</p>
+                  <h4 data-i18n="act-1-title">นั่งรถเมล์ไฟฟ้า (EV)</h4>
+                  <p data-i18n="act-1-desc">ลดคาร์บอน 3.2 kg</p>
                 </div>
-                <div class="activity-points">+20 Carbon Credit</div>
+                <div class="activity-points" data-i18n="act-1-points">+20 Carbon Credit</div>
               </div>
 
               <div class="activity-item">
@@ -275,8 +255,8 @@
                   <i class="fa-solid fa-helmet-safety"></i>
                 </div>
                 <div class="activity-details">
-                  <h4>ขับขี่ปลอดภัยสวมหมวกนิรภัย (Helmet App)</h4>
-                  <p>บันทึกการเดินทางผ่านระบบ AI</p>
+                  <h4 data-i18n="act-2-title">สวมหมวกกันน็อกขับขี่ปลอดภัย</h4>
+                  <p data-i18n="act-2-desc">ตรวจจับความปลอดภัยด้วย AI</p>
                 </div>
                 <div class="activity-points">+120 Points</div>
               </div>
@@ -286,35 +266,10 @@
                   <i class="fa-solid fa-person-walking"></i>
                 </div>
                 <div class="activity-details">
-                  <h4>เดินสะสมก้าว 10,000 ก้าว (PromptGo)</h4>
-                  <p>ลดคาร์บอน 1.5 kg CO₂e</p>
+                  <h4 data-i18n="act-3-title">เดินสะสมครบ 10,000 ก้าว</h4>
+                  <p data-i18n="act-3-desc">ลดคาร์บอน 1.5 kg</p>
                 </div>
                 <div class="activity-points">+50 Points</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Badges & Eco Achievements -->
-          <div class="details-card">
-            <div class="details-card-header">
-              <h3><i class="fa-solid fa-trophy yellow-icon"></i> ความสำเร็จ (Achievements)</h3>
-            </div>
-            <div class="achievements-grid-dashboard">
-              <div class="badge-item tooltipped" data-tooltip="บันทึกกิจกรรมลดคาร์บอนติดต่อกัน 7 วัน">
-                <div class="badge-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                <span class="badge-title">วินัยสีเขียว</span>
-              </div>
-              <div class="badge-item tooltipped" data-tooltip="แลกของรางวัลประเภทคูปองอาหารสำเร็จ">
-                <div class="badge-icon"><i class="fa-solid fa-mug-hot"></i></div>
-                <span class="badge-title">นักชิมรักษ์โลก</span>
-              </div>
-              <div class="badge-item tooltipped" data-tooltip="ลดคาร์บอนสะสมครบ 100 kg">
-                <div class="badge-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                <span class="badge-title">ฮีโร่คาร์บอน</span>
-              </div>
-              <div class="badge-item locked tooltipped" data-tooltip="แลกรางวัลพรีเมียมครบ 5 ชิ้น (ยังไม่ได้ปลดล็อก)">
-                <div class="badge-icon"><i class="fa-solid fa-lock"></i></div>
-                <span class="badge-title">ผู้เก็บสะสม</span>
               </div>
             </div>
           </div>
@@ -407,26 +362,26 @@
               <div class="avatar-edit-wrapper">
                 <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="User Avatar"
                   class="profile-main-avatar" id="profile-avatar-img">
-                <button class="avatar-change-btn" id="change-avatar-btn" title="เปลี่ยนรูปโปรไฟล์">
+                <button class="avatar-change-btn" id="change-avatar-btn" title="Change profile picture">
                   <i class="fa-solid fa-camera"></i>
                 </button>
                 <input type="file" id="profile-file-input" accept="image/*" style="display: none;">
               </div>
-              <h2 id="profile-user-name">สมชาย รักดี</h2>
-              <div class="profile-code-badge">รหัสสมาชิก: <span id="profile-user-code">CW-88492</span></div>
+              <h2 id="profile-user-name">Somchai Rakdee</h2>
+              <div class="profile-code-badge" id="profile-code-badge-label">Student ID: <span id="profile-user-code">651234567</span></div>
 
               <div class="profile-quick-stats">
                 <div class="quick-stat-box">
                   <div class="box-num" id="profile-points-display">1,250</div>
-                  <div class="box-label">แต้มสะสม</div>
+                  <div class="box-label" data-i18n="points-unit">Points</div>
                 </div>
                 <div class="quick-stat-box">
-                  <div class="box-num">Level 3</div>
-                  <div class="box-label">ระดับสมาชิก</div>
+                  <div class="box-num" id="profile-faculty-display">Science</div>
+                  <div class="box-label" data-i18n="profile-faculty">Faculty</div>
                 </div>
                 <div class="quick-stat-box">
-                  <div class="box-num">148.5 kg</div>
-                  <div class="box-label">ลดคาร์บอนแล้ว</div>
+                  <div class="box-num" id="profile-major-display">CompSci</div>
+                  <div class="box-label" data-i18n="profile-major">Major</div>
                 </div>
               </div>
             </div>
@@ -435,68 +390,50 @@
           <!-- Right: Editable Profile details form -->
           <div class="profile-right">
             <div class="details-card">
-              <h3><i class="fa-solid fa-user-edit green-icon"></i> ข้อมูลผู้ใช้งานอย่างเป็นทางการ</h3>
+              <h3 data-i18n="profile-title"><i class="fa-solid fa-user-edit green-icon"></i> Student Profile Information</h3>
               <form class="profile-form" id="profile-details-form" onsubmit="event.preventDefault();">
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="input-firstname">ชื่อจริง</label>
-                    <input type="text" id="input-firstname" value="สมชาย" placeholder="ชื่อจริง">
+                    <label for="input-firstname" data-i18n="profile-firstname">First Name</label>
+                    <input type="text" id="input-firstname" value="Somchai" placeholder="First Name" data-i18n="profile-firstname">
                   </div>
                   <div class="form-group">
-                    <label for="input-lastname">นามสกุล</label>
-                    <input type="text" id="input-lastname" value="รักดี" placeholder="นามสกุล">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="input-email">อีเมล</label>
-                    <input type="email" id="input-email" value="somchai.rakdee@example.com" placeholder="อีเมล">
-                  </div>
-                  <div class="form-group">
-                    <label for="input-phone">เบอร์โทรศัพท์</label>
-                    <input type="text" id="input-phone" value="089-123-4567" placeholder="เบอร์โทรศัพท์">
+                    <label for="input-lastname" data-i18n="profile-lastname">Last Name</label>
+                    <input type="text" id="input-lastname" value="Rakdee" placeholder="Last Name" data-i18n="profile-lastname">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="input-wallet-address">Blockchain Address (Wallet)</label>
-                    <input type="text" id="input-wallet-address" value="0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
-                      readonly class="readonly-input">
-                    <small>ใช้สำหรับการอ้างอิงความถูกต้องและการบันทึกธุรกรรมความดีคาร์บอนบนเครือข่ายบล็อกเชน</small>
+                    <label for="input-student-id" data-i18n="profile-student-id">Student ID</label>
+                    <input type="text" id="input-student-id" value="651234567" placeholder="Student ID" data-i18n="profile-student-id">
+                  </div>
+                  <div class="form-group">
+                    <label for="input-phone" data-i18n="profile-phone">Phone Number</label>
+                    <input type="text" id="input-phone" value="089-123-4567" placeholder="Phone Number" data-i18n="profile-phone">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="input-email" data-i18n="profile-email">Email Address</label>
+                    <input type="email" id="input-email" value="somchai.r@psru.ac.th" placeholder="Email Address" data-i18n="profile-email">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="input-faculty" data-i18n="profile-faculty">Faculty</label>
+                    <input type="text" id="input-faculty" value="Science and Technology" placeholder="Faculty" data-i18n="profile-faculty">
+                  </div>
+                  <div class="form-group">
+                    <label for="input-major" data-i18n="profile-major">Major</label>
+                    <input type="text" id="input-major" value="Computer Science" placeholder="Major" data-i18n="profile-major">
                   </div>
                 </div>
                 <div class="form-actions">
-                  <button type="button" class="btn btn-primary" id="btn-save-profile">
-                    <i class="fa-solid fa-floppy-disk"></i> บันทึกข้อมูลโปรไฟล์
+                  <button type="button" class="btn btn-primary" id="btn-save-profile" data-i18n="btn-save-profile">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Profile Details
                   </button>
                 </div>
               </form>
-            </div>
-
-            <!-- Gamification Level Up Progress card -->
-            <div class="details-card" style="margin-top: 1.5rem;">
-              <h3><i class="fa-solid fa-medal green-icon"></i> อันดับผู้พิทักษ์รักษ์โลก</h3>
-              <div class="leaderboard-preview">
-                <div class="leaderboard-item top-rank">
-                  <span class="rank-num">1</span>
-                  <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=leader1" alt="avatar" class="rank-avatar">
-                  <span class="rank-name">สุดารัตน์ ใจรักโลก</span>
-                  <span class="rank-points">4,820 แต้ม</span>
-                </div>
-                <div class="leaderboard-item top-rank">
-                  <span class="rank-num">2</span>
-                  <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=leader2" alt="avatar" class="rank-avatar">
-                  <span class="rank-name">วิชัย ปลูกป่า</span>
-                  <span class="rank-points">3,150 แต้ม</span>
-                </div>
-                <div class="leaderboard-item current-user">
-                  <span class="rank-num">18</span>
-                  <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="avatar" class="rank-avatar"
-                    id="leaderboard-avatar-img">
-                  <span class="rank-name">คุณสมชาย รักดี (คุณ)</span>
-                  <span class="rank-points" id="profile-leaderboard-points">1,250 แต้ม</span>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -550,10 +487,10 @@
         <div class="warning-icon-wrapper">
           <i class="fa-solid fa-circle-question"></i>
         </div>
-        <h2>ยืนยันการแลกรางวัล</h2>
+        <h2 data-i18n="modal-confirm-title">ยืนยันการแลกรางวัล</h2>
       </div>
       <div class="modal-confirm-body">
-        <p>คุณแน่ใจหรือไม่ว่าจะใช้แต้มคาร์บอนแลกรับของรางวัลนี้?</p>
+        <p id="confirm-redemption-msg-text">คุณแน่ใจหรือไม่ว่าจะใช้แต้มคาร์บอนแลกรับของรางวัลนี้?</p>
         <div class="confirm-item-preview">
           <img id="confirm-modal-item-img" src="" alt="Item Image" class="confirm-item-avatar">
           <div class="confirm-item-details">
@@ -563,27 +500,27 @@
         </div>
         <div class="points-summary-box">
           <div class="summary-row">
-            <span>คะแนนปัจจุบันของคุณ</span>
+            <span data-i18n="confirm-current-points">คะแนนปัจจุบันของคุณ</span>
             <span id="confirm-user-current-points">1,250</span>
           </div>
           <div class="summary-row deduction">
-            <span>คะแนนที่จะถูกหัก</span>
+            <span data-i18n="confirm-points-deduct">คะแนนที่จะถูกหัก</span>
             <span id="confirm-points-to-deduct">-300</span>
           </div>
           <div class="summary-row total">
-            <span>คะแนนคงเหลือหลังทำรายการ</span>
+            <span data-i18n="confirm-points-remaining">คะแนนคงเหลือหลังทำรายการ</span>
             <span id="confirm-points-remaining">950</span>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" id="btn-cancel-redeem">ยกเลิก</button>
-        <button class="btn btn-primary" id="btn-confirm-redeem-action">กดยืนยันการแลกรางวัล</button>
+        <button class="btn btn-secondary" id="btn-cancel-redeem" data-i18n="btn-cancel">ยกเลิก</button>
+        <button class="btn btn-primary" id="btn-confirm-redeem-action" data-i18n="btn-confirm">กดยืนยันการแลกรางวัล</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal: Redeem Success (Image 3 Inspiration) -->
+  <!-- Modal: Redeem Success -->
   <div class="modal-overlay" id="success-redeem-modal">
     <div class="confetti-container" id="confetti-container"></div>
     <div class="modal-card modal-success-card animate-pop-in">
@@ -591,118 +528,27 @@
         <i class="fa-solid fa-check"></i>
       </div>
 
-      <h2>แลกของรางวัลสำเร็จ!</h2>
-      <p class="success-subtitle">คุณได้แลก <span id="success-item-name" class="highlight">Stainless Bottle</span>
-        เรียบร้อยแล้ว</p>
+      <h2 data-i18n="modal-success-title">แลกของรางวัลสำเร็จ!</h2>
+      <p class="success-subtitle" id="success-subtitle-text">คุณได้แลก <span id="success-item-name" class="highlight">Stainless Bottle</span> เรียบร้อยแล้ว</p>
 
       <div class="success-points-display">
         <div class="point-box-col">
-          <span class="box-label">ใช้ Points</span>
+          <span class="box-label" data-i18n="success-spent">ใช้ Points</span>
           <span class="box-val minus" id="success-points-spent">-300 Points</span>
         </div>
         <div class="point-box-col">
-          <span class="box-label">คะแนนคงเหลือ</span>
+          <span class="box-label" data-i18n="success-remaining">คะแนนคงเหลือ</span>
           <span class="box-val green" id="success-points-remaining">950 Points</span>
         </div>
       </div>
 
-      <div class="coupon-code-container">
-        <span class="coupon-label">รหัสคูปองส่วนลดของคุณ (Coupon Code)</span>
-        <div class="barcode-card">
-          <div class="barcode-wrapper" id="success-barcode-svg">
-            <!-- Dynamically generated SVG Barcode will be injected here -->
-          </div>
-          <div class="barcode-value-row">
-            <span class="code-text" id="success-coupon-code">CBW-BTL-9842A</span>
-            <button class="btn-copy-code" id="btn-copy-coupon-code" title="คัดลอกรหัส">
-              <i class="fa-regular fa-copy"></i>
-            </button>
-          </div>
-        </div>
-        <small class="copy-success-message" id="copy-success-msg">คัดลอกรหัสเรียบร้อยแล้ว!</small>
-        <small class="barcode-instruction">แสดงบาร์โค้ดนี้แก่ร้านค้าเพื่อเปิดใช้งานส่วนลด</small>
-      </div>
-
       <div class="success-actions-row">
-        <button class="btn btn-primary" id="btn-view-transaction-history">
+        <button class="btn btn-primary" id="btn-view-transaction-history" data-i18n="btn-view-history">
           <i class="fa-solid fa-receipt"></i> ดูประวัติการทำรายการ
         </button>
-        <button class="btn btn-secondary-outline" id="btn-back-to-shop">
-          กลับไปช้อปรางวัล
+        <button class="btn btn-secondary-outline" id="btn-back-to-shop" data-i18n="btn-close-modal">
+          ปิดหน้าต่าง
         </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Blockchain Block Explorer Simulation -->
-  <div class="modal-overlay" id="blockchain-explorer-modal">
-    <div class="modal-card modal-explorer">
-      <div class="modal-explorer-header">
-        <div class="explorer-logo">
-          <i class="fa-solid fa-cube"></i>
-          <span>Carbon Ledger Explorer</span>
-        </div>
-        <button class="modal-close-btn" id="close-explorer-modal-btn">&times;</button>
-      </div>
-      <div class="modal-explorer-body">
-        <div class="explorer-status-badge">
-          <span class="dot-green pulsing"></span> บันทึกธุรกรรมสำเร็จในบล็อกที่ <b>#14,942,082</b>
-        </div>
-
-        <table class="explorer-table">
-          <tr>
-            <td>Transaction Hash</td>
-            <td class="hash-text" id="exp-tx-hash">0x8a72cf5be640e340e4f6a7d6d7e2...3f2b</td>
-          </tr>
-          <tr>
-            <td>Block Height</td>
-            <td>14,942,082 <span class="confirmations-badge">5 Confirmations</span></td>
-          </tr>
-          <tr>
-            <td>Timestamp</td>
-            <td id="exp-timestamp">13 มิ.ย. 2025 10:30:45</td>
-          </tr>
-          <tr>
-            <td>Action (ประเภท)</td>
-            <td id="exp-action">Redeem Reward</td>
-          </tr>
-          <tr>
-            <td>From (ผู้ใช้)</td>
-            <td class="hash-text">0x71C7656EC7ab88b098defB751B7401B5f6d8976F (คุณสมชาย)</td>
-          </tr>
-          <tr>
-            <td>To (ร้านค้า/ระบบ)</td>
-            <td class="hash-text">0x884029415ACd7b420f1885deD7614a9082F81c4e (CarbonWallet Vault)</td>
-          </tr>
-          <tr>
-            <td>Value Transferred</td>
-            <td class="points-val" id="exp-points-value">-300 Points</td>
-          </tr>
-          <tr>
-            <td>Network Fee</td>
-            <td>0.000025 GWEI (Sponsor by CarbonWallet)</td>
-          </tr>
-        </table>
-
-        <div class="explorer-block-visual">
-          <div class="block-node active">
-            <i class="fa-solid fa-link"></i>
-            <span>Block #14942081</span>
-          </div>
-          <div class="block-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-          <div class="block-node active current">
-            <i class="fa-solid fa-cube"></i>
-            <span>Block #14942082 (TXN ID)</span>
-          </div>
-          <div class="block-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-          <div class="block-node pending">
-            <i class="fa-solid fa-clock"></i>
-            <span>Block #14942083 (Pending)</span>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" id="btn-close-explorer">ปิด Explorer</button>
       </div>
     </div>
   </div>
