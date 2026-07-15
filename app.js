@@ -372,7 +372,8 @@ function syncUI() {
   const welcomeAvatar = document.getElementById("welcome-avatar-img");
   if (welcomeAvatar) welcomeAvatar.src = currentAvatar;
   
-  // 6. Sync notifications list and badge
+  // 6. Sync dashboard transactions and notifications
+  renderDashboardTransactions();
   renderNotifications();
 
   // 7. Update translations across static elements
@@ -776,6 +777,79 @@ function triggerConfetti() {
 // ==========================================
 let currentTxFilter = "all";
 let selectedTxId = null;
+
+function renderDashboardTransactions() {
+  const container = document.getElementById("dashboard-tx-list");
+  if (!container) return;
+  
+  container.innerHTML = "";
+  
+  // Show the latest 5 transactions
+  const latestTx = transactionsState.slice(0, 5);
+  
+  if (latestTx.length === 0) {
+    const emptyMsg = appLanguage === "th" ? "ไม่มีประวัติการทำรายการ" : "No point history available.";
+    container.innerHTML = `
+      <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+        <p>${emptyMsg}</p>
+      </div>
+    `;
+    return;
+  }
+  
+  latestTx.forEach(tx => {
+    const item = document.createElement("div");
+    item.className = "activity-item";
+    
+    const isPositive = tx.points >= 0;
+    const sign = isPositive ? "+" : "";
+    const pointsClass = isPositive ? "plus" : "minus";
+    
+    // Choose icon based on category/type
+    let iconClass = "fa-coins";
+    if (tx.title.includes("PromptGo") || tx.title.includes("Prompt go") || tx.title.includes("นั่ง Prompt")) {
+      iconClass = "fa-van-shuttle";
+    } else if (tx.title.includes("Helmet") || tx.title.includes("หมวกกันน็อก") || tx.title.includes("สวมหมวก")) {
+      iconClass = "fa-helmet-safety";
+    } else if (tx.title.includes("เดิน")) {
+      iconClass = "fa-person-walking";
+    } else if (tx.type === "used") {
+      iconClass = "fa-gift";
+    }
+    
+    let titleVal = tx.title;
+    if (appLanguage === "en") {
+      if (tx.title.includes("นั่ง Prompt go")) titleVal = "PromptGo - Ride EV Bus";
+      else if (tx.title.includes("เดินลดคาร์บอน")) titleVal = "Walk & Save Carbon";
+      else if (tx.title.includes("ขับขี่ปลอดภัยสวมหมวก")) titleVal = "Helmet App - Ride with Helmet";
+      else if (tx.title.includes("คูปองกาแฟร้อน")) titleVal = "Coffee Coupon - Hot Coffee";
+      else if (tx.title.includes("แลกแก้วเก็บอุณหภูมิ")) titleVal = "Redeemed Reward - Tumbler";
+      else if (tx.title.includes("แลกรับของรางวัล")) {
+        titleVal = tx.title.replace("แลกรับของรางวัล - ", "Redeemed Reward - ");
+      }
+    }
+    
+    let pointsLabel = `${sign}${tx.points}`;
+    if (tx.type === "carbon") {
+      pointsLabel = `${sign}${tx.points} Carbon Credit`;
+    } else {
+      pointsLabel = `${sign}${tx.points} Points`;
+    }
+    
+    item.innerHTML = `
+      <div class="activity-icon ${isPositive ? 'bg-green-light' : 'bg-orange-light'}">
+        <i class="fa-solid ${iconClass}"></i>
+      </div>
+      <div class="activity-details">
+        <h4>${titleVal}</h4>
+        <p>${tx.date} · ${tx.time}</p>
+      </div>
+      <div class="activity-points ${pointsClass}">${pointsLabel}</div>
+    `;
+    
+    container.appendChild(item);
+  });
+}
 
 function renderTransactions() {
   const container = document.getElementById("transactions-list-container");
@@ -1314,11 +1388,14 @@ const TRANSLATIONS = {
     "hero-level": "ระดับ: Carbon Hero",
     "planted-trees": "ปลูกต้นไม้สะสม 12 ต้น",
     
-    // Dashboard Stats
+     // Dashboard Stats
     "stat-points-title": "คะแนนสะสมทั้งหมด",
     "stat-points-desc": "ใช้สำหรับแลกของรางวัลและคูปองส่วนลดพิเศษ",
     "btn-quick-redeem": "แลกของรางวัล",
-    "stat-chart-title": "สถิติจำนวนกิจกรรมรายสัปดาห์",
+    "stat-chart-title": "สถิติการใช้รถไฟฟ้า PromptGo รายสัปดาห์",
+    "chart-summary-weekly": "สัปดาห์นี้: <b>8 ครั้ง</b>",
+    "dashboard-history-title": "ประวัติคะแนนและการใช้งานล่าสุด",
+    "chart-val-0": "0 ครั้ง",
     "chart-val-1": "1 ครั้ง",
     "chart-val-2": "2 ครั้ง",
     "chart-val-3": "3 ครั้ง",
@@ -1437,7 +1514,10 @@ const TRANSLATIONS = {
     "stat-points-title": "Total Points Balance",
     "stat-points-desc": "Redeem these points instantly for eco-rewards and store discounts.",
     "btn-quick-redeem": "Redeem Rewards",
-    "stat-chart-title": "Weekly Green Activity Frequency",
+    "stat-chart-title": "Weekly PromptGo EV Bus Usage",
+    "chart-summary-weekly": "This week: <b>8 times</b>",
+    "dashboard-history-title": "Recent Points & Activity History",
+    "chart-val-0": "0 times",
     "chart-val-1": "1 time",
     "chart-val-2": "2 times",
     "chart-val-3": "3 times",
