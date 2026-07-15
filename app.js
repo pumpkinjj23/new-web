@@ -361,13 +361,16 @@ function syncUI() {
     }
   }
   
-  // 5. Sync avatar images if custom avatar exists
-  if (userState.avatar) {
-    document.getElementById("profile-avatar-img").src = userState.avatar;
-    document.getElementById("sidebar-avatar-img").src = userState.avatar;
-    const headerAvatar = document.getElementById("header-avatar-img");
-    if (headerAvatar) headerAvatar.src = userState.avatar;
-  }
+  // 5. Sync avatar images
+  const currentAvatar = userState.avatar || "https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai";
+  const profileAvatar = document.getElementById("profile-avatar-img");
+  if (profileAvatar) profileAvatar.src = currentAvatar;
+  const sidebarAvatar = document.getElementById("sidebar-avatar-img");
+  if (sidebarAvatar) sidebarAvatar.src = currentAvatar;
+  const headerAvatar = document.getElementById("header-avatar-img");
+  if (headerAvatar) headerAvatar.src = currentAvatar;
+  const welcomeAvatar = document.getElementById("welcome-avatar-img");
+  if (welcomeAvatar) welcomeAvatar.src = currentAvatar;
   
   // 6. Sync notifications list and badge
   renderNotifications();
