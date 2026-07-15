@@ -2,6 +2,19 @@
 // CARBONWALLET STATE MANAGEMENT
 // ==========================================
 
+// Reset cache if it has Jo Rakdee
+try {
+  const cached = localStorage.getItem("cw_user");
+  if (cached && JSON.parse(cached).firstName === "Jo") {
+    localStorage.removeItem("cw_user");
+    localStorage.removeItem("cw_rewards");
+    localStorage.removeItem("cw_transactions");
+    localStorage.removeItem("cw_notifications");
+  }
+} catch (e) {
+  console.error("Failed to check or clear localStorage:", e);
+}
+
 // Default Initial Data
 const DEFAULT_USER = {
   firstName: "Somchai",
@@ -1302,8 +1315,11 @@ const TRANSLATIONS = {
     "stat-points-title": "คะแนนสะสมทั้งหมด",
     "stat-points-desc": "ใช้สำหรับแลกของรางวัลและคูปองส่วนลดพิเศษ",
     "btn-quick-redeem": "แลกของรางวัล",
-    "stat-carbon-title": "คาร์บอนที่ลดได้สะสม",
-    "stat-carbon-desc": "เทียบเท่ากับการปลูกต้นไม้ <b>16.5</b> ต้นในปีนี้",
+    "stat-chart-title": "สถิติจำนวนกิจกรรมรายสัปดาห์",
+    "chart-val-1": "1 ครั้ง",
+    "chart-val-2": "2 ครั้ง",
+    "chart-val-3": "3 ครั้ง",
+    "chart-val-4": "4 ครั้ง",
     
     // Dashboard Actions
     "action-title": "บันทึกกิจกรรมรักษ์โลก",
@@ -1418,8 +1434,11 @@ const TRANSLATIONS = {
     "stat-points-title": "Total Points Balance",
     "stat-points-desc": "Redeem these points instantly for eco-rewards and store discounts.",
     "btn-quick-redeem": "Redeem Rewards",
-    "stat-carbon-title": "Carbon Saved",
-    "stat-carbon-desc": "Equivalent to planting <b>16.5</b> trees this year.",
+    "stat-chart-title": "Weekly Green Activity Frequency",
+    "chart-val-1": "1 time",
+    "chart-val-2": "2 times",
+    "chart-val-3": "3 times",
+    "chart-val-4": "4 times",
     
     // Dashboard Actions
     "action-title": "Today's Eco Actions",

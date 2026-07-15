@@ -907,6 +907,92 @@ a {
   box-shadow: inset 5px 0 10px rgba(5, 255, 150, 0.02);
 }
 
+.card-chart {
+  border-left: 5px solid var(--accent-color);
+  box-shadow: inset 5px 0 10px rgba(0, 210, 255, 0.02);
+}
+
+.chart-container {
+  margin-top: 1rem;
+}
+
+.chart-bars {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 120px;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.chart-bar-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  width: calc(100% / 7 - 10px);
+  height: 100%;
+  gap: 0.5rem;
+}
+
+.chart-bar-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.chart-bar-value {
+  width: 14px;
+  background: linear-gradient(180deg, var(--accent-color) 0%, rgba(0, 210, 255, 0.2) 100%);
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  animation: scaleUpBar 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: bottom;
+}
+
+.chart-bar-value:hover {
+  background: linear-gradient(180deg, var(--primary-color) 0%, rgba(5, 255, 150, 0.3) 100%);
+  box-shadow: 0 0 12px rgba(5, 255, 150, 0.4);
+}
+
+.bar-tooltip {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-smooth);
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}
+
+[data-theme="light"] .bar-tooltip {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.chart-bar-value:hover .bar-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+@keyframes scaleUpBar {
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
 .card-bg-decoration {
   position: absolute;
   right: -20px;

@@ -170,11 +170,8 @@
         <!-- Welcome banner with visual animation elements -->
         <div class="welcome-banner">
           <div class="welcome-text-wrapper">
-            <h2>สวัสดี, <span id="user-display-name">คุณสมชาย รักดี</span>! 👋</h2>
-            <p data-i18n="welcome-subtitle">วันนี้คุณช่วยลดคาร์บอนไปแล้ว <b>2.4 kg CO₂e</b> มาร่วมสร้างสิ่งแวดล้อมที่ดีไปด้วยกันนะ!</p>
-            <div class="banner-badges">
-              <span class="badge badge-green" data-i18n="planted-trees"><i class="fa-solid fa-tree"></i> ปลูกต้นไม้สะสม 12 ต้น</span>
-            </div>
+            <h2>สวัสดี <span id="user-display-name">คุณสมชาย รักดี</span>! 👋</h2>
+
           </div>
           <div class="welcome-visual">
             <div class="eco-circle">
@@ -205,24 +202,59 @@
             </div>
           </div>
 
-          <!-- Carbon Credits Saved Card -->
-          <div class="stat-card card-carbon">
+          <!-- Weekly Eco Savings Chart Card -->
+          <div class="stat-card card-chart">
+            <div class="card-bg-decoration"></div>
             <div class="stat-icon-wrapper">
-              <i class="fa-solid fa-cloud-arrow-down"></i>
+              <i class="fa-solid fa-chart-simple"></i>
             </div>
             <div class="stat-info">
-              <h3 data-i18n="stat-carbon-title">คาร์บอนที่ลดได้สะสม</h3>
-              <div class="stat-value">148.5 <span class="unit">kg CO₂e</span></div>
-              <p class="stat-desc" data-i18n="stat-carbon-desc">เทียบเท่าการปลูกต้นไม้ <b>16.5</b> ต้นในปีนี้</p>
-            </div>
-            <!-- Interactive progress bar -->
-            <div class="progress-container">
-              <div class="progress-label">
-                <span data-i18n="goal-progress">ความคืบหน้าเป้าหมายเดือนนี้</span>
-                <span>74%</span>
-              </div>
-              <div class="progress-bar-outer">
-                <div class="progress-bar-inner" style="width: 74%"></div>
+              <h3 data-i18n="stat-chart-title">สถิติจำนวนกิจกรรมรายสัปดาห์</h3>
+              <div class="chart-container">
+                <div class="chart-bars">
+                  <div class="chart-bar-wrapper">
+                    <div class="chart-bar-label">Mon</div>
+                    <div class="chart-bar-value" style="height: 40%">
+                      <span class="bar-tooltip" data-i18n="chart-val-2">2 ครั้ง</span>
+                    </div>
+                  </div>
+                  <div class="chart-bar-wrapper">
+                    <div class="chart-bar-label">Tue</div>
+                    <div class="chart-bar-value" style="height: 70%">
+                      <span class="bar-tooltip" data-i18n="chart-val-3">3 ครั้ง</span>
+                    </div>
+                  </div>
+                  <div class="chart-bar-wrapper">
+                    <div class="chart-bar-label">Wed</div>
+                    <div class="chart-bar-value" style="height: 50%">
+                      <span class="bar-tooltip" data-i18n="chart-val-2">2 ครั้ง</span>
+                    </div>
+                  </div>
+                  <div class="chart-bar-wrapper">
+                    <div class="chart-bar-label">Thu</div>
+                    <div class="chart-bar-value" style="height: 85%">
+                      <span class="bar-tooltip" data-i18n="chart-val-4">4 ครั้ง</span>
+                    </div>
+                  </div>
+                  <div class="chart-bar-wrapper">
+                    <div class="chart-bar-label">Fri</div>
+                    <div class="chart-bar-value" style="height: 60%">
+                      <span class="bar-tooltip" data-i18n="chart-val-3">3 ครั้ง</span>
+                    </div>
+                  </div>
+                  <div class="chart-bar-wrapper">
+                    <div class="chart-bar-label">Sat</div>
+                    <div class="chart-bar-value" style="height: 30%">
+                      <span class="bar-tooltip" data-i18n="chart-val-1">1 ครั้ง</span>
+                    </div>
+                  </div>
+                  <div class="chart-bar-wrapper">
+                    <div class="chart-bar-label">Sun</div>
+                    <div class="chart-bar-value" style="height: 45%">
+                      <span class="bar-tooltip" data-i18n="chart-val-2">2 ครั้ง</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -235,7 +267,8 @@
           <!-- Green Activities List -->
           <div class="details-card">
             <div class="details-card-header">
-              <h3 data-i18n="latest-activities"><i class="fa-solid fa-leaf green-icon"></i> กิจกรรมลดคาร์บอนล่าสุดของคุณ</h3>
+              <h3 data-i18n="latest-activities"><i class="fa-solid fa-leaf green-icon"></i> กิจกรรมลดคาร์บอนล่าสุดของคุณ
+              </h3>
               <button class="btn-text" id="btn-view-all-activities" data-i18n="view-all">ดูทั้งหมด</button>
             </div>
             <div class="activities-list">
@@ -368,7 +401,8 @@
                 <input type="file" id="profile-file-input" accept="image/*" style="display: none;">
               </div>
               <h2 id="profile-user-name">Somchai Rakdee</h2>
-              <div class="profile-code-badge" id="profile-code-badge-label">Student ID: <span id="profile-user-code">651234567</span></div>
+              <div class="profile-code-badge" id="profile-code-badge-label">Student ID: <span
+                  id="profile-user-code">651234567</span></div>
 
               <div class="profile-quick-stats">
                 <div class="quick-stat-box">
@@ -390,42 +424,50 @@
           <!-- Right: Editable Profile details form -->
           <div class="profile-right">
             <div class="details-card">
-              <h3 data-i18n="profile-title"><i class="fa-solid fa-user-edit green-icon"></i> Student Profile Information</h3>
+              <h3 data-i18n="profile-title"><i class="fa-solid fa-user-edit green-icon"></i> Student Profile Information
+              </h3>
               <form class="profile-form" id="profile-details-form" onsubmit="event.preventDefault();">
                 <div class="form-row">
                   <div class="form-group">
                     <label for="input-firstname" data-i18n="profile-firstname">First Name</label>
-                    <input type="text" id="input-firstname" value="Somchai" placeholder="First Name" data-i18n="profile-firstname">
+                    <input type="text" id="input-firstname" value="Somchai" placeholder="First Name"
+                      data-i18n="profile-firstname">
                   </div>
                   <div class="form-group">
                     <label for="input-lastname" data-i18n="profile-lastname">Last Name</label>
-                    <input type="text" id="input-lastname" value="Rakdee" placeholder="Last Name" data-i18n="profile-lastname">
+                    <input type="text" id="input-lastname" value="Rakdee" placeholder="Last Name"
+                      data-i18n="profile-lastname">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group">
                     <label for="input-student-id" data-i18n="profile-student-id">Student ID</label>
-                    <input type="text" id="input-student-id" value="651234567" placeholder="Student ID" data-i18n="profile-student-id">
+                    <input type="text" id="input-student-id" value="651234567" placeholder="Student ID"
+                      data-i18n="profile-student-id">
                   </div>
                   <div class="form-group">
                     <label for="input-phone" data-i18n="profile-phone">Phone Number</label>
-                    <input type="text" id="input-phone" value="089-123-4567" placeholder="Phone Number" data-i18n="profile-phone">
+                    <input type="text" id="input-phone" value="089-123-4567" placeholder="Phone Number"
+                      data-i18n="profile-phone">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group">
                     <label for="input-email" data-i18n="profile-email">Email Address</label>
-                    <input type="email" id="input-email" value="somchai.r@psru.ac.th" placeholder="Email Address" data-i18n="profile-email">
+                    <input type="email" id="input-email" value="somchai.r@psru.ac.th" placeholder="Email Address"
+                      data-i18n="profile-email">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group">
                     <label for="input-faculty" data-i18n="profile-faculty">Faculty</label>
-                    <input type="text" id="input-faculty" value="Science and Technology" placeholder="Faculty" data-i18n="profile-faculty">
+                    <input type="text" id="input-faculty" value="Science and Technology" placeholder="Faculty"
+                      data-i18n="profile-faculty">
                   </div>
                   <div class="form-group">
                     <label for="input-major" data-i18n="profile-major">Major</label>
-                    <input type="text" id="input-major" value="Computer Science" placeholder="Major" data-i18n="profile-major">
+                    <input type="text" id="input-major" value="Computer Science" placeholder="Major"
+                      data-i18n="profile-major">
                   </div>
                 </div>
                 <div class="form-actions">
@@ -515,7 +557,8 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" id="btn-cancel-redeem" data-i18n="btn-cancel">ยกเลิก</button>
-        <button class="btn btn-primary" id="btn-confirm-redeem-action" data-i18n="btn-confirm">กดยืนยันการแลกรางวัล</button>
+        <button class="btn btn-primary" id="btn-confirm-redeem-action"
+          data-i18n="btn-confirm">กดยืนยันการแลกรางวัล</button>
       </div>
     </div>
   </div>
@@ -529,7 +572,8 @@
       </div>
 
       <h2 data-i18n="modal-success-title">แลกสำเร็จแล้ว</h2>
-      <p class="success-subtitle" id="success-subtitle-text">คุณได้แลก <span id="success-item-name" class="highlight">Stainless Bottle</span> เรียบร้อยแล้ว</p>
+      <p class="success-subtitle" id="success-subtitle-text">คุณได้แลก <span id="success-item-name"
+          class="highlight">Stainless Bottle</span> เรียบร้อยแล้ว</p>
 
       <div class="success-points-display">
         <div class="point-box-col">
