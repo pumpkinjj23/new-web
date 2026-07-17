@@ -25,7 +25,7 @@
   <div class="glow-blob glow-3"></div>
 
   <!-- App Shell Container -->
-  <div class="app-container">
+  <div class="app-container" id="app-container">
 
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
@@ -60,6 +60,12 @@
             <a href="#" class="nav-link" data-target="profile-view" id="sidebar-nav-profile">
               <i class="fa-solid fa-user-gear"></i>
               <span data-i18n="nav-profile">โปรไฟล์นักศึกษา</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" id="sidebar-nav-logout">
+              <i class="fa-solid fa-right-from-bracket text-danger"></i>
+              <span data-i18n="nav-logout">ออกจากระบบ</span>
             </a>
           </li>
         </ul>
@@ -104,6 +110,10 @@
               <a href="#" class="nav-link" data-target="profile-view" id="nav-profile">
                 <i class="fa-solid fa-user-gear"></i>
                 <span data-i18n="nav-profile">โปรไฟล์นักศึกษา</span>
+              </a>
+              <a href="#" class="nav-link" id="nav-logout">
+                <i class="fa-solid fa-right-from-bracket text-danger"></i>
+                <span data-i18n="nav-logout">ออกจากระบบ</span>
               </a>
             </div>
           </div>
@@ -574,6 +584,307 @@
   <div class="toast" id="toast-message">
     <i class="fa-solid fa-check-circle" id="toast-icon"></i>
     <span id="toast-text">สำเร็จ!</span>
+  </div>
+
+  <!-- ==================== AUTH CONTAINER (LOGIN & REGISTER) ==================== -->
+  <div class="auth-container" id="auth-container">
+    <!-- Left panel: Brand info / Features -->
+    <div class="auth-brand-panel">
+      <div class="brand-glow-blob bglow-1"></div>
+      <div class="brand-glow-blob bglow-2"></div>
+      
+      <div class="brand-panel-content">
+        <div class="brand-logo">
+          <i class="fa-solid fa-leaf"></i>
+          <span class="logo-text">Carbon<span>Wallet</span></span>
+        </div>
+        
+        <h1 class="brand-title" data-i18n="brand-welcome-title">สะสมแต้มคาร์บอน<br>เพื่อโลกสีเขียวของเรา</h1>
+        <p class="brand-desc" data-i18n="brand-welcome-desc">ร่วมเป็นส่วนหนึ่งในการขับเคลื่อนมหาวิทยาลัยสีเขียว บันทึกกิจกรรมเพื่อสิ่งแวดล้อม และแลกรับของรางวัลพิเศษมากมาย</p>
+        
+        <!-- Feature cards -->
+        <div class="brand-features">
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-van-shuttle"></i></div>
+            <div class="feature-info">
+              <h4 data-i18n="feat-mobility">PromptGo</h4>
+              <p data-i18n="feat-mobility-desc">นั่งรถรับส่งไฟฟ้าภายใน มรภ.พิบูลสงคราม สะสมแต้มได้ง่ายๆ</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="feature-info">
+              <h4 data-i18n="feat-safety">Eco Safety</h4>
+              <p data-i18n="feat-safety-desc">ขับขี่ปลอดภัย สวมหมวกนิรภัยเพื่อโลกและสุขภาพของคุณ</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-gift"></i></div>
+            <div class="feature-info">
+              <h4 data-i18n="feat-rewards">Premium Rewards</h4>
+              <p data-i18n="feat-rewards-desc">แลกเปลี่ยนพอยท์เป็นของรางวัลสุดพรีเมียมและคูปองส่วนลดพิเศษ</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-footer">
+          <p>© 2026 PSRU Green Campus Initiative. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right panel: Interactive Form card -->
+    <div class="auth-form-panel">
+      <div class="auth-top-controls">
+        <div class="lang-toggle" id="auth-lang-toggle-btn">EN</div>
+        <div class="theme-toggle" id="auth-theme-toggle-btn">
+          <i class="fa-solid fa-moon"></i>
+        </div>
+      </div>
+
+      <div class="auth-card animate-pop-in">
+        <div class="auth-header">
+          <div class="logo-icon hide-desktop">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <span class="logo-text hide-desktop">Carbon<span>Wallet</span></span>
+          <p class="auth-subtitle" data-i18n="auth-subtitle">แพลตฟอร์มสะสมแต้มคาร์บอนและแลกของรางวัล</p>
+        </div>
+
+        <!-- Tabs Toggle -->
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tab-login" data-tab="login-form-wrapper" data-i18n="tab-login">เข้าสู่ระบบ</div>
+          <div class="auth-tab" id="tab-register" data-tab="register-form-wrapper" data-i18n="tab-register">สมัครสมาชิก</div>
+          <div class="tab-indicator"></div>
+        </div>
+
+        <!-- Login Wrapper -->
+        <div class="form-wrapper active" id="login-form-wrapper">
+          <form class="auth-form" id="login-form" onsubmit="event.preventDefault();">
+            <div class="form-group">
+              <label for="login-email" data-i18n="email-label">อีเมลมหาวิทยาลัย</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="email" id="login-email" placeholder="example@psru.ac.th" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="login-password" data-i18n="password-label">รหัสผ่าน</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="login-password" placeholder="••••••••" required>
+                <i class="fa-regular fa-eye-slash toggle-password" id="toggle-login-password"></i>
+              </div>
+            </div>
+            <div class="forgot-pwd-row">
+              <a href="#" class="auth-link" id="link-forgot-pwd" data-i18n="forgot-password">ลืมรหัสผ่าน?</a>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="btn-login-submit" data-i18n="btn-login">
+              <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ
+            </button>
+          </form>
+        </div>
+
+        <!-- Register Wrapper -->
+        <div class="form-wrapper" id="register-form-wrapper">
+          <form class="auth-form" id="register-form" onsubmit="event.preventDefault();">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reg-firstname" data-i18n="profile-firstname">ชื่อจริง</label>
+                <input type="text" id="reg-firstname" placeholder="สมชาย" required>
+              </div>
+              <div class="form-group">
+                <label for="reg-lastname" data-i18n="profile-lastname">นามสกุล</label>
+                <input type="text" id="reg-lastname" placeholder="รักดี" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reg-student-id" data-i18n="profile-student-id">รหัสนักศึกษา</label>
+                <input type="text" id="reg-student-id" placeholder="651234567" required>
+              </div>
+              <div class="form-group">
+                <label for="reg-phone" data-i18n="profile-phone">เบอร์โทรศัพท์</label>
+                <input type="text" id="reg-phone" placeholder="089-123-4567" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reg-email" data-i18n="profile-email">อีเมลมหาวิทยาลัย</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="email" id="reg-email" placeholder="somchai.r@psru.ac.th" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reg-faculty" data-i18n="profile-faculty">คณะ</label>
+                <input type="text" id="reg-faculty" placeholder="วิทยาศาสตร์และเทคโนโลยี" required>
+              </div>
+              <div class="form-group">
+                <label for="reg-major" data-i18n="profile-major">สาขาวิชา</label>
+                <input type="text" id="reg-major" placeholder="วิทยาการคอมพิวเตอร์" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reg-password" data-i18n="password-label">รหัสผ่าน</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="reg-password" placeholder="••••••••" required>
+                <i class="fa-regular fa-eye-slash toggle-password" id="toggle-reg-password"></i>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reg-confirm-password" data-i18n="confirm-password-label">ยืนยันรหัสผ่าน</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="reg-confirm-password" placeholder="••••••••" required>
+                <i class="fa-regular fa-eye-slash toggle-password" id="toggle-reg-conf-password"></i>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="btn-register-submit" data-i18n="btn-register">
+              <i class="fa-solid fa-user-plus"></i> สมัครสมาชิก
+            </button>
+          </form>
+        </div>
+
+        <!-- Forgot Password Wrapper -->
+        <div class="form-wrapper" id="forgot-form-wrapper">
+          <form class="auth-form" id="forgot-password-form" onsubmit="event.preventDefault();">
+            <div class="auth-header-mini">
+              <h3 data-i18n="forgot-pwd-title">กู้คืนรหัสผ่าน</h3>
+              <p class="auth-subtitle-mini" data-i18n="forgot-pwd-desc">ระบุอีเมลของคุณที่ใช้สมัคร เพื่อรับลิงก์สำหรับตั้งรหัสผ่านใหม่</p>
+            </div>
+            <div class="form-group" style="margin-top: 1.5rem;">
+              <label for="forgot-email" data-i18n="email-label">อีเมลมหาวิทยาลัย</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="email" id="forgot-email" placeholder="example@psru.ac.th" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="btn-forgot-submit" data-i18n="btn-send-reset-link" style="margin-top: 1.5rem;">
+              <i class="fa-solid fa-paper-plane"></i> ส่งลิงก์กู้คืนรหัสผ่าน
+            </button>
+            <div class="back-to-login-row" style="text-align: center; margin-top: 1.5rem;">
+              <a href="#" class="auth-link" id="link-back-to-login" data-i18n="back-to-login">
+                <i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าเข้าสู่ระบบ
+              </a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Social Login Options -->
+        <div class="social-divider">
+          <span data-i18n="social-divider">หรือเชื่อมต่อด้วย</span>
+        </div>
+
+        <div class="social-buttons">
+          <button class="btn btn-social btn-google" id="btn-google-login">
+            <svg class="google-icon" viewBox="0 0 24 24" width="20" height="20">
+              <path fill="#ea4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.67 1.6 15.02 1 12 1 7.35 1 3.39 3.67 1.48 7.56l3.87 3C6.27 7.76 8.9 5.04 12 5.04z"/>
+              <path fill="#4285f4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.27H12v4.51h6.46c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.57-5.16 3.57-8.82z"/>
+              <path fill="#fbbc05" d="M5.35 14.56c-.24-.72-.38-1.49-.38-2.28 0-.79.14-1.56.38-2.28L1.48 7.02C.54 8.92 0 11.03 0 13.25c0 2.22.54 4.33 1.48 6.23l3.87-2.92z"/>
+              <path fill="#34a853" d="M12 23c3.24 0 5.97-1.07 7.96-2.92l-3.86-3c-1.07.72-2.45 1.15-4.1 1.15-3.1 0-5.73-2.72-6.65-5.52l-3.87 3C3.39 19.33 7.35 23 12 23z"/>
+            </svg>
+            <span data-i18n="google-login">Google</span>
+          </button>
+
+          <button class="btn btn-social btn-thaid" id="btn-thaid-login">
+            <div class="thaid-badge-icon">
+              <i class="fa-solid fa-id-card"></i>
+            </div>
+            <span data-i18n="thaid-login">ThaiD</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Google Account Selector (Simulated) -->
+  <div class="modal-overlay" id="google-modal">
+    <div class="modal-card google-auth-card animate-pop-in">
+      <div class="google-modal-header">
+        <svg viewBox="0 0 24 24" width="32" height="32">
+          <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22c-.22-.66-.35-1.36-.35-2.09z"/>
+          <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <h3 data-i18n="google-modal-title">ลงชื่อเข้าใช้งานด้วย Google</h3>
+        <p data-i18n="google-modal-subtitle">เพื่อเข้าใช้งานระบบ CarbonWallet</p>
+      </div>
+
+      <div class="google-accounts-list">
+        <div class="google-account-item" data-email="somchai.r@psru.ac.th" data-name="Somchai Rakdee">
+          <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somchai" alt="Somchai" class="google-account-avatar">
+          <div class="google-account-details">
+            <div class="google-account-name">Somchai Rakdee</div>
+            <div class="google-account-email">somchai.r@psru.ac.th</div>
+          </div>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="google-account-item" data-email="somsri.y@gmail.com" data-name="Somsri Yenjai">
+          <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Somsri" alt="Somsri" class="google-account-avatar">
+          <div class="google-account-details">
+            <div class="google-account-name">Somsri Yenjai</div>
+            <div class="google-account-email">somsri.y@gmail.com</div>
+          </div>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="google-account-item-new" id="google-use-another-account">
+          <div class="google-new-account-icon">
+            <i class="fa-regular fa-user"></i>
+          </div>
+          <span data-i18n="google-use-another">ใช้บัญชีอื่น</span>
+        </div>
+      </div>
+
+      <div class="google-modal-footer">
+        <button class="btn btn-secondary-outline btn-block" id="btn-close-google" data-i18n="btn-cancel">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: ThaiD Login QR Scanner (Simulated) -->
+  <div class="modal-overlay" id="thaid-modal">
+    <div class="modal-card thaid-auth-card animate-pop-in">
+      <div class="thaid-modal-header">
+        <div class="thaid-logo-circle">
+          <i class="fa-solid fa-id-card"></i>
+        </div>
+        <h3>ThaiD Digital ID Login</h3>
+        <p data-i18n="thaid-modal-desc">กรุณาสแกน QR Code นี้ด้วยแอปพลิเคชัน ThaiD เพื่อยืนยันตัวตน</p>
+      </div>
+
+      <div class="thaid-qr-wrapper">
+        <div class="thaid-qr-box" id="thaid-qr-box">
+          <!-- A stylish mock QR code representation -->
+          <div class="mock-qr-code">
+            <i class="fa-solid fa-qrcode"></i>
+            <div class="qr-scanner-line"></div>
+          </div>
+        </div>
+        <div class="thaid-timer" id="thaid-timer">
+          <i class="fa-regular fa-clock"></i> <span data-i18n="qr-timeout">QR Code จะหมดอายุใน</span> <b id="qr-countdown">120</b> <span data-i18n="seconds-unit">วินาที</span>
+        </div>
+      </div>
+
+      <div class="thaid-instructions">
+        <ul>
+          <li><i class="fa-solid fa-mobile-screen-button"></i> <span data-i18n="thaid-step1">เปิดแอปพลิเคชัน ThaiD บนมือถือของคุณ</span></li>
+          <li><i class="fa-solid fa-camera"></i> <span data-i18n="thaid-step2">เลือกเมนู "สแกน QR Code"</span></li>
+          <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="thaid-step3">กดยืนยันการลงชื่อเข้าใช้งานบนมือถือ</span></li>
+        </ul>
+      </div>
+
+      <div class="thaid-modal-actions">
+        <button class="btn btn-primary btn-block" id="btn-simulate-thaid-scan">
+          <i class="fa-solid fa-circle-check"></i> จำลองการสแกนสำเร็จ
+        </button>
+        <button class="btn btn-secondary-outline btn-block" id="btn-close-thaid" data-i18n="btn-cancel">ยกเลิก</button>
+      </div>
+    </div>
   </div>
 
   <!-- Core JavaScript Code -->

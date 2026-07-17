@@ -1267,6 +1267,10 @@ document.addEventListener("DOMContentLoaded", () => {
   renderRewards();
   renderTransactions();
   renderNotifications();
+
+  // Auth flow initialization
+  initAuthFlow();
+  checkAuthStatus();
 });
 
 // ==========================================
@@ -1490,7 +1494,41 @@ const TRANSLATIONS = {
     "act-2-title": "สวมหมวกกันน็อกขับขี่ปลอดภัย",
     "act-2-desc": "ระบบยืนยันความปลอดภัย",
     "act-3-title": "เดินสะสมครบ 10,000 ก้าว",
-    "act-3-desc": "ลดคาร์บอน 1.5 kg"
+    "act-3-desc": "ลดคาร์บอน 1.5 kg",
+    "nav-logout": "ออกจากระบบ",
+    "auth-subtitle": "แพลตฟอร์มสะสมแต้มคาร์บอนและแลกของรางวัล",
+    "tab-login": "เข้าสู่ระบบ",
+    "tab-register": "สมัครสมาชิก",
+    "email-label": "อีเมลมหาวิทยาลัย",
+    "password-label": "รหัสผ่าน",
+    "confirm-password-label": "ยืนยันรหัสผ่าน",
+    "forgot-password": "ลืมรหัสผ่าน?",
+    "btn-login": "เข้าสู่ระบบ",
+    "btn-register": "สมัครสมาชิก",
+    "social-divider": "หรือเชื่อมต่อด้วย",
+    "google-login": "Google",
+    "thaid-login": "ThaiD",
+    "google-modal-title": "ลงชื่อเข้าใช้งานด้วย Google",
+    "google-modal-subtitle": "เพื่อเข้าใช้งานระบบ CarbonWallet",
+    "google-use-another": "ใช้บัญชีอื่น",
+    "thaid-modal-desc": "กรุณาสแกน QR Code นี้ด้วยแอปพลิเคชัน ThaiD เพื่อยืนยันตัวตน",
+    "qr-timeout": "QR Code จะหมดอายุใน",
+    "seconds-unit": "วินาที",
+    "thaid-step1": "เปิดแอปพลิเคชัน ThaiD บนมือถือของคุณ",
+    "thaid-step2": "เลือกเมนู \"สแกน QR Code\"",
+    "thaid-step3": "กดยืนยันการลงชื่อเข้าใช้งานบนมือถือ",
+    "brand-welcome-title": "สะสมแต้มคาร์บอน<br>เพื่อโลกสีเขียวของเรา",
+    "brand-welcome-desc": "ร่วมเป็นส่วนหนึ่งในการขับเคลื่อนมหาวิทยาลัยสีเขียว บันทึกกิจกรรมเพื่อสิ่งแวดล้อม และแลกรับของรางวัลพิเศษมากมาย",
+    "feat-mobility": "PromptGo",
+    "feat-mobility-desc": "นั่งรถรับส่งไฟฟ้าภายใน มรภ.พิบูลสงคราม สะสมแต้มได้ง่ายๆ",
+    "feat-safety": "Eco Safety",
+    "feat-safety-desc": "ขับขี่ปลอดภัย สวมหมวกนิรภัยเพื่อโลกและสุขภาพของคุณ",
+    "feat-rewards": "Premium Rewards",
+    "feat-rewards-desc": "แลกเปลี่ยนพอยท์เป็นของรางวัลสุดพรีเมียมและคูปองส่วนลดพิเศษ",
+    "forgot-pwd-title": "กู้คืนรหัสผ่าน",
+    "forgot-pwd-desc": "ระบุอีเมลของคุณที่ใช้สมัคร เพื่อรับลิงก์สำหรับตั้งรหัสผ่านใหม่",
+    "btn-send-reset-link": "ส่งลิงก์กู้คืนรหัสผ่าน",
+    "back-to-login": "กลับสู่หน้าเข้าสู่ระบบ"
   },
   en: {
     // Navigation
@@ -1612,7 +1650,41 @@ const TRANSLATIONS = {
     "act-2-title": "Safe Ride with Helmet (Helmet App)",
     "act-2-desc": "Journey recorded by AI safety system",
     "act-3-title": "Walked 10,000 steps",
-    "act-3-desc": "Saved 1.5 kg CO₂e emissions"
+    "act-3-desc": "Saved 1.5 kg CO₂e emissions",
+    "nav-logout": "Log Out",
+    "auth-subtitle": "Carbon Points Accumulation & Reward Platform",
+    "tab-login": "Log In",
+    "tab-register": "Register",
+    "email-label": "University Email",
+    "password-label": "Password",
+    "confirm-password-label": "Confirm Password",
+    "forgot-password": "Forgot password?",
+    "btn-login": "Log In",
+    "btn-register": "Register",
+    "social-divider": "Or connect with",
+    "google-login": "Google",
+    "thaid-login": "ThaiD",
+    "google-modal-title": "Sign in with Google",
+    "google-modal-subtitle": "to access CarbonWallet System",
+    "google-use-another": "Use another account",
+    "thaid-modal-desc": "Please scan this QR Code with your ThaiD application to authenticate",
+    "qr-timeout": "QR Code will expire in",
+    "seconds-unit": "seconds",
+    "thaid-step1": "Open the ThaiD app on your mobile device",
+    "thaid-step2": "Select the \"Scan QR Code\" menu",
+    "thaid-step3": "Confirm sign-in on your phone",
+    "brand-welcome-title": "Accumulate Carbon Credits<br>For Our Green Planet",
+    "brand-welcome-desc": "Join the green campus movement, record eco-friendly actions, and redeem premium rewards.",
+    "feat-mobility": "PromptGo",
+    "feat-mobility-desc": "Earn carbon points easily by using eco-friendly electric transport.",
+    "feat-safety": "Eco Safety",
+    "feat-safety-desc": "Verify helmet usage with AI to promote a safer, greener environment.",
+    "feat-rewards": "Premium Rewards",
+    "feat-rewards-desc": "Convert your carbon points into exclusive vouchers, discounts, and gear.",
+    "forgot-pwd-title": "Reset Password",
+    "forgot-pwd-desc": "Enter your registered email to receive a password reset link.",
+    "btn-send-reset-link": "Send Reset Link",
+    "back-to-login": "Back to Log In"
   }
 };
 
@@ -1684,4 +1756,340 @@ function initLangToggle() {
       showToast(msg, "success");
     });
   }
+}
+
+// ==========================================
+// USER AUTHENTICATION & SOCIAL LOGIN FLOWS
+// ==========================================
+let thaidCountdownInterval = null;
+
+function checkAuthStatus() {
+  const isLoggedIn = localStorage.getItem("cw_logged_in") === "true";
+  const authContainer = document.getElementById("auth-container");
+  const appContainer = document.getElementById("app-container");
+  
+  if (isLoggedIn) {
+    authContainer.classList.add("hidden");
+    appContainer.classList.remove("hidden");
+    syncUI();
+  } else {
+    appContainer.classList.add("hidden");
+    authContainer.classList.remove("hidden");
+  }
+}
+
+function initAuthFlow() {
+  // 1. Tab switches (Login / Register / Forgot Password)
+  const tabLogin = document.getElementById("tab-login");
+  const tabRegister = document.getElementById("tab-register");
+  const indicator = document.querySelector(".tab-indicator");
+  const loginWrapper = document.getElementById("login-form-wrapper");
+  const registerWrapper = document.getElementById("register-form-wrapper");
+  const forgotWrapper = document.getElementById("forgot-form-wrapper");
+  const authTabs = document.querySelector(".auth-tabs");
+
+  tabLogin.addEventListener("click", () => {
+    tabLogin.classList.add("active");
+    tabRegister.classList.remove("active");
+    indicator.style.transform = "translateX(0)";
+    loginWrapper.classList.add("active");
+    registerWrapper.classList.remove("active");
+    forgotWrapper.classList.remove("active");
+    authTabs.style.display = "flex";
+  });
+
+  tabRegister.addEventListener("click", () => {
+    tabRegister.classList.add("active");
+    tabLogin.classList.remove("active");
+    indicator.style.transform = "translateX(100%)";
+    registerWrapper.classList.add("active");
+    loginWrapper.classList.remove("active");
+    forgotWrapper.classList.remove("active");
+    authTabs.style.display = "flex";
+  });
+
+  // Forgot password link navigation
+  const linkForgotPwd = document.getElementById("link-forgot-pwd");
+  if (linkForgotPwd) {
+    linkForgotPwd.addEventListener("click", (e) => {
+      e.preventDefault();
+      loginWrapper.classList.remove("active");
+      registerWrapper.classList.remove("active");
+      forgotWrapper.classList.add("active");
+      authTabs.style.display = "none";
+    });
+  }
+
+  // Back to login navigation
+  const linkBackToLogin = document.getElementById("link-back-to-login");
+  if (linkBackToLogin) {
+    linkBackToLogin.addEventListener("click", (e) => {
+      e.preventDefault();
+      forgotWrapper.classList.remove("active");
+      loginWrapper.classList.add("active");
+      authTabs.style.display = "flex";
+      tabLogin.classList.add("active");
+      tabRegister.classList.remove("active");
+      indicator.style.transform = "translateX(0)";
+    });
+  }
+
+  // Forgot password form submission
+  const forgotForm = document.getElementById("forgot-password-form");
+  if (forgotForm) {
+    forgotForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("forgot-email").value.trim();
+      if (!email) {
+        showToast(appLanguage === "th" ? "กรุณากรอกอีเมล" : "Please enter your email.", "error");
+        return;
+      }
+
+      showToast(
+        appLanguage === "th" 
+          ? "ส่งลิงก์สำหรับกู้คืนรหัสผ่านไปยังอีเมลของคุณเรียบร้อยแล้ว!" 
+          : "Reset link has been sent to your email successfully!", 
+        "success"
+      );
+
+      setTimeout(() => {
+        linkBackToLogin.click();
+        document.getElementById("forgot-email").value = "";
+      }, 2000);
+    });
+  }
+
+  // 2. Toggle password visibility
+  setupPasswordToggle("toggle-login-password", "login-password");
+  setupPasswordToggle("toggle-reg-password", "reg-password");
+  setupPasswordToggle("toggle-reg-conf-password", "reg-confirm-password");
+
+  // 3. Login submit
+  document.getElementById("login-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("login-email").value.trim();
+    const pass = document.getElementById("login-password").value.trim();
+
+    if (!email || !pass) {
+      showToast(appLanguage === "th" ? "กรุณากรอกข้อมูลให้ครบถ้วน" : "Please fill in all fields.", "error");
+      return;
+    }
+
+    // Check if there is a cached user in localStorage
+    const cached = localStorage.getItem("cw_user");
+    let targetUser = { ...DEFAULT_USER };
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (parsed.email === email) {
+        targetUser = parsed;
+      } else {
+        targetUser = { ...parsed, email: email };
+      }
+    } else {
+      targetUser.email = email;
+    }
+
+    userState = targetUser;
+    localStorage.setItem("cw_logged_in", "true");
+    saveToLocalStorage();
+    syncUI();
+    checkAuthStatus();
+    showToast(appLanguage === "th" ? "เข้าสู่ระบบสำเร็จ!" : "Logged in successfully!", "success");
+  });
+
+  // 4. Register submit
+  document.getElementById("register-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const firstName = document.getElementById("reg-firstname").value.trim();
+    const lastName = document.getElementById("reg-lastname").value.trim();
+    const studentId = document.getElementById("reg-student-id").value.trim();
+    const phone = document.getElementById("reg-phone").value.trim();
+    const email = document.getElementById("reg-email").value.trim();
+    const faculty = document.getElementById("reg-faculty").value.trim();
+    const major = document.getElementById("reg-major").value.trim();
+    const password = document.getElementById("reg-password").value.trim();
+    const confirmPassword = document.getElementById("reg-confirm-password").value.trim();
+
+    if (password !== confirmPassword) {
+      showToast(appLanguage === "th" ? "รหัสผ่านไม่ตรงกัน" : "Passwords do not match.", "error");
+      return;
+    }
+
+    userState = {
+      firstName,
+      lastName,
+      studentId,
+      phone,
+      email,
+      faculty,
+      major,
+      points: 1250
+    };
+
+    localStorage.setItem("cw_logged_in", "true");
+    saveToLocalStorage();
+    syncUI();
+    checkAuthStatus();
+    showToast(appLanguage === "th" ? "สมัครสมาชิกและเข้าสู่ระบบสำเร็จ!" : "Registered and logged in successfully!", "success");
+  });
+
+  // 5. Google simulated login
+  const googleBtn = document.getElementById("btn-google-login");
+  const googleModal = document.getElementById("google-modal");
+  const closeGoogle = document.getElementById("btn-close-google");
+
+  googleBtn.addEventListener("click", () => {
+    googleModal.classList.add("active");
+  });
+
+  closeGoogle.addEventListener("click", () => {
+    googleModal.classList.remove("active");
+  });
+
+  const googleItems = document.querySelectorAll(".google-account-item");
+  googleItems.forEach(item => {
+    item.addEventListener("click", () => {
+      const email = item.getAttribute("data-email");
+      const name = item.getAttribute("data-name");
+      const nameParts = name.split(" ");
+      const firstName = nameParts[0] || "Google";
+      const lastName = nameParts[1] || "User";
+
+      userState = {
+        firstName,
+        lastName,
+        studentId: "65" + Math.floor(1000000 + Math.random() * 9000000),
+        phone: "089-" + Math.floor(100 + Math.random() * 900) + "-" + Math.floor(1000 + Math.random() * 9000),
+        email,
+        faculty: "Information Technology",
+        major: "Software Engineering",
+        points: 1250,
+        avatar: item.querySelector("img").src
+      };
+
+      googleModal.classList.remove("active");
+      localStorage.setItem("cw_logged_in", "true");
+      saveToLocalStorage();
+      syncUI();
+      checkAuthStatus();
+      showToast(appLanguage === "th" ? "เข้าสู่ระบบด้วย Google สำเร็จ!" : "Logged in with Google successfully!", "success");
+    });
+  });
+
+  document.getElementById("google-use-another-account").addEventListener("click", () => {
+    googleModal.classList.remove("active");
+    tabLogin.click();
+    document.getElementById("login-email").focus();
+  });
+
+  // 6. ThaiD simulated login
+  const thaidBtn = document.getElementById("btn-thaid-login");
+  const thaidModal = document.getElementById("thaid-modal");
+  const closeThaid = document.getElementById("btn-close-thaid");
+  const simulateThaidScan = document.getElementById("btn-simulate-thaid-scan");
+
+  thaidBtn.addEventListener("click", () => {
+    thaidModal.classList.add("active");
+    startThaidCountdown();
+  });
+
+  closeThaid.addEventListener("click", () => {
+    thaidModal.classList.remove("active");
+    clearInterval(thaidCountdownInterval);
+  });
+
+  simulateThaidScan.addEventListener("click", () => {
+    handleThaidSuccess();
+  });
+
+  document.getElementById("thaid-qr-box").addEventListener("click", () => {
+    handleThaidSuccess();
+  });
+
+  // 7. Logout buttons
+  const sidebarLogout = document.getElementById("sidebar-nav-logout");
+  const navLogout = document.getElementById("nav-logout");
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    localStorage.removeItem("cw_logged_in");
+    checkAuthStatus();
+    showToast(appLanguage === "th" ? "ออกจากระบบเรียบร้อย" : "Logged out successfully", "success");
+  };
+
+  if (sidebarLogout) sidebarLogout.addEventListener("click", handleLogout);
+  if (navLogout) navLogout.addEventListener("click", handleLogout);
+
+  // 8. Auth screen top controls
+  const authLangBtn = document.getElementById("auth-lang-toggle-btn");
+  const authThemeBtn = document.getElementById("auth-theme-toggle-btn");
+
+  if (authLangBtn) {
+    authLangBtn.addEventListener("click", () => {
+      document.getElementById("lang-toggle-btn").click();
+      authLangBtn.innerText = appLanguage === "th" ? "EN" : "TH";
+    });
+  }
+
+  if (authThemeBtn) {
+    authThemeBtn.addEventListener("click", () => {
+      document.getElementById("theme-toggle-btn").click();
+    });
+  }
+}
+
+function setupPasswordToggle(toggleId, inputId) {
+  const toggle = document.getElementById(toggleId);
+  const input = document.getElementById(inputId);
+  if (toggle && input) {
+    toggle.addEventListener("click", () => {
+      const type = input.getAttribute("type") === "password" ? "text" : "password";
+      input.setAttribute("type", type);
+      toggle.classList.toggle("fa-eye");
+      toggle.classList.toggle("fa-eye-slash");
+    });
+  }
+}
+
+function startThaidCountdown() {
+  const countdownEl = document.getElementById("qr-countdown");
+  if (!countdownEl) return;
+  let timeLeft = 120;
+  countdownEl.innerText = timeLeft;
+  
+  clearInterval(thaidCountdownInterval);
+  thaidCountdownInterval = setInterval(() => {
+    timeLeft--;
+    countdownEl.innerText = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(thaidCountdownInterval);
+      document.getElementById("btn-close-thaid").click();
+      showToast(appLanguage === "th" ? "หมดเวลาสแกน QR Code" : "QR Code expired", "error");
+    }
+  }, 1000);
+}
+
+function handleThaidSuccess() {
+  clearInterval(thaidCountdownInterval);
+  document.getElementById("thaid-modal").classList.remove("active");
+
+  userState = {
+    firstName: "วิทยา",
+    lastName: "ใจดี",
+    studentId: "650999999",
+    phone: "081-999-8888",
+    email: "wittaya.j@psru.ac.th",
+    faculty: "Science and Technology",
+    major: "Computer Engineering",
+    points: 1250,
+    avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Wittaya"
+  };
+
+  localStorage.setItem("cw_logged_in", "true");
+  saveToLocalStorage();
+  syncUI();
+  checkAuthStatus();
+  showToast(appLanguage === "th" ? "ยืนยันตัวตนด้วย ThaiD สำเร็จ!" : "Authenticated with ThaiD successfully!", "success");
 }
