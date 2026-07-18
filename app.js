@@ -106,7 +106,7 @@ const DEFAULT_REWARDS = [
     titleEn: "Free Major Cineplex Movie Ticket (Deluxe)",
     points: 250,
     stock: 30,
-    image: "images/mj.png",
+    image: "images/m.jpg",
     category: "others",
     descriptionTh: "ตั๋วชมภาพยนตร์ที่นั่งประเภท Deluxe 1 ที่นั่ง สำหรับชมภาพยนตร์ระบบปกติ 2D ที่โรงภาพยนตร์เมเจอร์ ซีนีเพล็กซ์ ทุกสาขา",
     descriptionEn: "Free 1 Deluxe seat ticket for regular 2D movie screenings at Major Cineplex locations.",
