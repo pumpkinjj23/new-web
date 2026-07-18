@@ -30,14 +30,14 @@ const DEFAULT_USER = {
 const DEFAULT_REWARDS = [
   {
     id: "r1",
-    titleTh: "คูปองส่วนลดร้านกาแฟ",
-    titleEn: "Coffee Coupon",
+    titleTh: "คูปองเครื่องดื่ม Café Amazon",
+    titleEn: "Café Amazon Beverage Coupon",
     points: 150,
     stock: 120,
-    image: "images/coffee_coupon.png",
+    image: "images/Café_Amazon_Logo.svg.webp",
     category: "food",
-    descriptionTh: "คูปองแทนเงินสดสำหรับแลกเครื่องดื่มร้อนหรือเย็นฟรี 1 แก้ว (มูลค่าสูงสุด 80 บาท) ที่ร้านกาแฟในมหาวิทยาลัยที่ร่วมรายการ เพียงแสดงรหัสคูปองกับพนักงานเพื่อรับสิทธิ์",
-    descriptionEn: "Free 1 hot or iced beverage (up to 80 THB) at participating university coffee shops. Present this coupon to the barista.",
+    descriptionTh: "คูปองแทนเงินสดสำหรับแลกเครื่องดื่มร้อนหรือเย็น Café Amazon ฟรี 1 แก้ว (มูลค่าสูงสุด 80 บาท) เพียงแสดงรหัสคูปองกับพนักงานเพื่อรับสิทธิ์",
+    descriptionEn: "Free 1 Café Amazon hot or iced beverage (up to 80 THB) at participating locations. Present this coupon to the barista.",
     redeemCount: 350
   },
   {
@@ -70,7 +70,7 @@ const DEFAULT_REWARDS = [
     titleEn: "Grab 100B Discount Coupon",
     points: 200,
     stock: 80,
-    image: "images/grab_coupon.png",
+    image: "images/G.jpg",
     category: "coupon",
     descriptionTh: "ส่วนลดค่าบริการเดินทาง Grab มูลค่า 100 บาท (ใช้ได้กับ GrabCar, GrabBike หรือ GrabEV) เพียงกรอกรหัสส่วนลดในแอปก่อนใช้บริการ",
     descriptionEn: "100 THB discount coupon for Grab services (GrabCar, GrabBike, or GrabEV) to encourage eco-friendly travel.",
@@ -102,15 +102,27 @@ const DEFAULT_REWARDS = [
   },
   {
     id: "r7",
-    titleTh: "ตั๋วชมภาพยนตร์ฟรี 1 ที่นั่ง",
-    titleEn: "Free Movie Ticket (Deluxe)",
+    titleTh: "ตั๋วชมภาพยนตร์ Major Cineplex ฟรี 1 ที่นั่ง",
+    titleEn: "Free Major Cineplex Movie Ticket (Deluxe)",
     points: 250,
-    stock: 60,
-    image: "images/movie_ticket.png",
+    stock: 30,
+    image: "images/mj.png",
     category: "others",
-    descriptionTh: "ตั๋วชมภาพยนตร์ที่นั่งประเภท Deluxe 1 ที่นั่ง สำหรับชมภาพยนตร์ระบบปกติ 2D ที่โรงภาพยนตร์เมเจอร์ ซีนีเพล็กซ์ หรือเอสเอฟ ซีนีม่า ทุกสาขา",
-    descriptionEn: "Free 1 Deluxe seat ticket for regular 2D movie screenings at Major Cineplex or SF Cinema locations.",
-    redeemCount: 290
+    descriptionTh: "ตั๋วชมภาพยนตร์ที่นั่งประเภท Deluxe 1 ที่นั่ง สำหรับชมภาพยนตร์ระบบปกติ 2D ที่โรงภาพยนตร์เมเจอร์ ซีนีเพล็กซ์ ทุกสาขา",
+    descriptionEn: "Free 1 Deluxe seat ticket for regular 2D movie screenings at Major Cineplex locations.",
+    redeemCount: 145
+  },
+  {
+    id: "r9",
+    titleTh: "ตั๋วชมภาพยนตร์ SF Cinema ฟรี 1 ที่นั่ง",
+    titleEn: "Free SF Cinema Movie Ticket (Deluxe)",
+    points: 250,
+    stock: 30,
+    image: "images/sf.jpg",
+    category: "others",
+    descriptionTh: "ตั๋วชมภาพยนตร์ที่นั่งประเภท Deluxe 1 ที่นั่ง สำหรับชมภาพยนตร์ระบบปกติ 2D ที่โรงภาพยนตร์เอสเอฟ ซีนีม่า ทุกสาขา",
+    descriptionEn: "Free 1 Deluxe seat ticket for regular 2D movie screenings at SF Cinema locations.",
+    redeemCount: 145
   },
   {
     id: "r8",
@@ -118,7 +130,7 @@ const DEFAULT_REWARDS = [
     titleEn: "Central 200B Gift Voucher",
     points: 350,
     stock: 40,
-    image: "images/central_coupon.png",
+    image: "images/s.webp",
     category: "coupon",
     descriptionTh: "คูปองแทนเงินสดอิเล็กทรอนิกส์ มูลค่า 200 บาท สำหรับใช้ซื้อสินค้าที่ห้างสรรพสินค้าเซ็นทรัลทุกสาขา ไม่มีขั้นต่ำในการช้อป",
     descriptionEn: "200 THB E-Gift Voucher to purchase items at Central Department Store. No minimum spend required.",
@@ -173,7 +185,7 @@ const DEFAULT_TRANSACTIONS = [
   },
   {
     id: "TXN-20260710-0001",
-    title: "Coffee Coupon - คูปองกาแฟร้อน",
+    title: "Café Amazon Coupon - คูปองเครื่องดื่ม Café Amazon",
     points: -150,
     type: "used",
     date: "10 ก.ค. 2026",
@@ -234,7 +246,15 @@ function loadFromLocalStorage() {
   
   if (cachedRewards) {
     const parsed = JSON.parse(cachedRewards);
-    rewardsState = parsed.map(item => {
+    // Merge any missing default rewards (e.g. newly added rewards) into the parsed cached state
+    const merged = [...parsed];
+    DEFAULT_REWARDS.forEach(defaultItem => {
+      if (!merged.some(item => item.id === defaultItem.id)) {
+        merged.push(defaultItem);
+      }
+    });
+
+    rewardsState = merged.map(item => {
       const defaultItem = DEFAULT_REWARDS.find(r => r.id === item.id);
       if (defaultItem) {
         return {
@@ -242,7 +262,8 @@ function loadFromLocalStorage() {
           titleTh: defaultItem.titleTh,
           titleEn: defaultItem.titleEn,
           descriptionTh: defaultItem.descriptionTh,
-          descriptionEn: defaultItem.descriptionEn
+          descriptionEn: defaultItem.descriptionEn,
+          image: defaultItem.image // Sync image path
         };
       }
       return item;
@@ -257,6 +278,9 @@ function loadFromLocalStorage() {
       }
       if (tx.title === "PromptGo - นั่งรถไฟฟ้ามหาวิทยาลัย" || tx.title === "EV Bus - เดินทางสาธารณะรถไฟฟ้า") {
         tx.title = "PromptGo - นั่ง Prompt go";
+      }
+      if (tx.title === "Coffee Coupon - คูปองกาแฟร้อน") {
+        tx.title = "Café Amazon Coupon - คูปองเครื่องดื่ม Café Amazon";
       }
       if (tx.source === "EV Bus Linker") {
         tx.source = "PromptGo App";
@@ -396,8 +420,10 @@ function renderRewards() {
   // Filter rewards based on search & category
   let filtered = rewardsState.filter(item => {
     const matchesCategory = currentRewardCategory === "all" || item.category === currentRewardCategory;
-    const matchesSearch = item.title.toLowerCase().includes(searchRewardQuery.toLowerCase()) || 
-                          item.description.toLowerCase().includes(searchRewardQuery.toLowerCase());
+    const title = (appLanguage === "th" ? item.titleTh : item.titleEn) || "";
+    const description = (appLanguage === "th" ? item.descriptionTh : item.descriptionEn) || "";
+    const matchesSearch = title.toLowerCase().includes(searchRewardQuery.toLowerCase()) || 
+                          description.toLowerCase().includes(searchRewardQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
   
@@ -822,10 +848,15 @@ function renderDashboardTransactions() {
       if (tx.title.includes("นั่ง Prompt go")) titleVal = "PromptGo - Ride EV Bus";
       else if (tx.title.includes("เดินลดคาร์บอน")) titleVal = "Walk & Save Carbon";
       else if (tx.title.includes("ขับขี่ปลอดภัยสวมหมวก")) titleVal = "Helmet App - Ride with Helmet";
-      else if (tx.title.includes("คูปองกาแฟร้อน")) titleVal = "Coffee Coupon - Hot Coffee";
+      else if (tx.title.includes("Café Amazon Coupon - คูปองเครื่องดื่ม Café Amazon")) titleVal = "Café Amazon Coupon - Café Amazon Beverage Coupon";
       else if (tx.title.includes("แลกแก้วเก็บอุณหภูมิ")) titleVal = "Redeemed Reward - Tumbler";
       else if (tx.title.includes("แลกรับของรางวัล")) {
-        titleVal = tx.title.replace("แลกรับของรางวัล - ", "Redeemed Reward - ");
+        titleVal = tx.title.replace("แลกรับของรางวัล - ", "Redeemed Reward - ")
+                           .replace("คูปองเครื่องดื่ม Café Amazon", "Café Amazon Beverage Coupon")
+                           .replace("คูปองแทนเงินสดเซ็นทรัล 200 บาท", "Central 200B Gift Voucher")
+                           .replace("ตั๋วชมภาพยนตร์ Major Cineplex ฟรี 1 ที่นั่ง", "Major Cineplex Movie Ticket")
+                           .replace("ตั๋วชมภาพยนตร์ SF Cinema ฟรี 1 ที่นั่ง", "SF Cinema Movie Ticket")
+                           .replace("คูปองส่วนลด Grab 100 บาท", "Grab 100B Discount Coupon");
       }
     }
     
@@ -888,9 +919,14 @@ function renderTransactions() {
       if (tx.title.includes("นั่ง Prompt go")) titleVal = "PromptGo - Ride Prompt go";
       else if (tx.title.includes("เดินลดคาร์บอน")) titleVal = "Walk & Save Carbon";
       else if (tx.title.includes("ขับขี่ปลอดภัยสวมหมวก")) titleVal = "Helmet App - Ride with Helmet";
-      else if (tx.title.includes("คูปองกาแฟร้อน")) titleVal = "Coffee Coupon - Hot Coffee";
-      else if (tx.title.includes("แลกรับของรางวัล - ")) {
-        titleVal = tx.title.replace("แลกรับของรางวัล - ", "Redeemed Reward - ");
+      else if (tx.title.includes("Café Amazon Coupon - คูปองเครื่องดื่ม Café Amazon")) titleVal = "Café Amazon Coupon - Café Amazon Beverage Coupon";
+      else if (tx.title.includes("แลกรับของรางวัล")) {
+        titleVal = tx.title.replace("แลกรับของรางวัล - ", "Redeemed Reward - ")
+                           .replace("คูปองเครื่องดื่ม Café Amazon", "Café Amazon Beverage Coupon")
+                           .replace("คูปองแทนเงินสดเซ็นทรัล 200 บาท", "Central 200B Gift Voucher")
+                           .replace("ตั๋วชมภาพยนตร์ Major Cineplex ฟรี 1 ที่นั่ง", "Major Cineplex Movie Ticket")
+                           .replace("ตั๋วชมภาพยนตร์ SF Cinema ฟรี 1 ที่นั่ง", "SF Cinema Movie Ticket")
+                           .replace("คูปองส่วนลด Grab 100 บาท", "Grab 100B Discount Coupon");
       }
     }
     
