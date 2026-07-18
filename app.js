@@ -295,6 +295,9 @@ function loadFromLocalStorage() {
   } else {
     notificationsState = [ ...DEFAULT_NOTIFICATIONS ];
   }
+  
+  // Save the updated state (with synced image paths and new rewards) back to localStorage
+  saveToLocalStorage();
 }
 
 // ==========================================
